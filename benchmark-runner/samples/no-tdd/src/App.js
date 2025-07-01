@@ -4,70 +4,71 @@ import './App.css';
 function App() {
   const [count, setCount] = useState(0);
   const [userName, setUserName] = useState('');
-  const [inputValue, setInputValue] = useState('');
-  const [error, setError] = useState('');
+  const [nameInput, setNameInput] = useState('');
+  const [nameError, setNameError] = useState('');
 
   useEffect(() => {
     const savedName = localStorage.getItem('userName');
     if (savedName) {
       setUserName(savedName);
-      setInputValue(savedName);
+      setNameInput(savedName);
     }
   }, []);
 
+  const handleNameChange = (e) => {
+    const value = e.target.value;
+    setNameInput(value);
+    
+    if (value.trim().length > 50) {
+      setNameError('Name must be 50 characters or less');
+    } else if (value.includes('<') || value.includes('>')) {
+      setNameError('Name cannot contain < or > characters');
+    } else {
+      setNameError('');
+    }
+  };
+
   const handleNameSubmit = (e) => {
     e.preventDefault();
-    const trimmedName = inputValue.trim();
+    const trimmedName = nameInput.trim();
     
-    if (trimmedName.length === 0) {
-      setError('Please enter a valid name');
-      return;
+    if (trimmedName && !nameError) {
+      setUserName(trimmedName);
+      localStorage.setItem('userName', trimmedName);
+    } else if (!trimmedName) {
+      setNameError('Please enter a name');
     }
-    
-    if (trimmedName.length > 50) {
-      setError('Name must be 50 characters or less');
-      return;
-    }
-    
-    setError('');
-    setUserName(trimmedName);
-    localStorage.setItem('userName', trimmedName);
-  };
-
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-    if (error) {
-      setError('');
-    }
-  };
-
-  const getGreeting = () => {
-    if (userName) {
-      return `Hello ${userName}, your count is: ${count}`;
-    }
-    return `Hello there, your count is: ${count}`;
   };
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>Benchmark React App</h1>
+        
         <form className="name-form" onSubmit={handleNameSubmit}>
-          <input
-            type="text"
-            value={inputValue}
-            onChange={handleInputChange}
-            placeholder="Enter your name"
-            className="name-input"
-            maxLength="50"
-          />
-          <button type="submit" className="name-submit">
-            Set Name
-          </button>
-          {error && <p className="error-message">{error}</p>}
+          <label htmlFor="nameInput">Enter your name:</label>
+          <div className="name-input-container">
+            <input
+              id="nameInput"
+              type="text"
+              value={nameInput}
+              onChange={handleNameChange}
+              placeholder="Your name"
+              maxLength={50}
+            />
+            <button type="submit" disabled={!nameInput.trim() || !!nameError}>
+              Save
+            </button>
+          </div>
+          {nameError && <p className="error-message">{nameError}</p>}
         </form>
+
         <div className="counter">
-          <p className="greeting">{getGreeting()}</p>
+          <p className="greeting">
+            {userName 
+              ? `Hello ${userName}, your count is: ${count}` 
+              : `Hello there, your count is: ${count}`}
+          </p>
           <button onClick={() => setCount(count + 1)}>
             Increment
           </button>

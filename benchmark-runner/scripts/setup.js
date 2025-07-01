@@ -55,6 +55,21 @@ async function createSampleDirectories() {
       } catch (error) {
         console.error(`   ❌ Failed to install dependencies for ${scenario.id}:`, error.message);
       }
+      
+      // Initialize git repository for change tracking
+      console.log(`   🔧 Initializing git repository for ${scenario.id}...`);
+      try {
+        execSync('git init', { cwd: sampleDir, stdio: 'pipe' });
+        execSync('git add .', { cwd: sampleDir, stdio: 'pipe' });
+        execSync('git commit -m "Initial commit - template setup"', { 
+          cwd: sampleDir, 
+          stdio: 'pipe',
+          env: { ...process.env, GIT_AUTHOR_NAME: 'Benchmark', GIT_AUTHOR_EMAIL: 'benchmark@test.com', GIT_COMMITTER_NAME: 'Benchmark', GIT_COMMITTER_EMAIL: 'benchmark@test.com' }
+        });
+        console.log(`   ✅ Git repository initialized for ${scenario.id}`);
+      } catch (error) {
+        console.error(`   ❌ Failed to initialize git for ${scenario.id}:`, error.message);
+      }
     }
     
     console.log('✨ Sample directories created successfully!');

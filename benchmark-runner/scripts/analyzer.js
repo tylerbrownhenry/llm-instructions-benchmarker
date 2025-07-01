@@ -12,22 +12,31 @@ class BenchmarkAnalyzer {
   constructor() {
     this.results = null;
     this.analysis = {};
+    this.runDir = null;
   }
 
   async loadLatestResults() {
-    const resultFiles = fs.readdirSync(RESULTS_PATH)
-      .filter(file => file.startsWith('benchmark-results-') && file.endsWith('.json'))
+    // Find the latest run directory
+    const runDirs = fs.readdirSync(RESULTS_PATH)
+      .filter(dir => dir.startsWith('run-') && fs.statSync(path.join(RESULTS_PATH, dir)).isDirectory())
       .sort()
       .reverse();
     
-    if (resultFiles.length === 0) {
-      throw new Error('No benchmark results found. Run the benchmark first.');
+    if (runDirs.length === 0) {
+      throw new Error('No benchmark run directories found. Run the benchmark first.');
     }
     
-    const latestFile = path.join(RESULTS_PATH, resultFiles[0]);
-    this.results = await fs.readJson(latestFile);
+    const latestRunDir = path.join(RESULTS_PATH, runDirs[0]);
+    const resultsFile = path.join(latestRunDir, 'benchmark-results.json');
     
-    console.log(`📊 Analyzing results from: ${resultFiles[0]}`);
+    if (!fs.existsSync(resultsFile)) {
+      throw new Error(`No benchmark results found in ${runDirs[0]}. Run the benchmark first.`);
+    }
+    
+    this.results = await fs.readJson(resultsFile);
+    this.runDir = latestRunDir;
+    
+    console.log(`📊 Analyzing results from: ${runDirs[0]}`);
     return this.results;
   }
 
@@ -265,20 +274,19 @@ class BenchmarkAnalyzer {
   }
 
   async saveReport(report) {
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const reportFile = path.join(RESULTS_PATH, `analysis-report-${timestamp}.json`);
+    const reportFile = path.join(this.runDir, 'analysis-report.json');
     
     await fs.writeJson(reportFile, report, { spaces: 2 });
     console.log(`💾 Analysis report saved to: ${reportFile}`);
     
     // Also generate a human-readable summary
-    await this.generateHumanReadableReport(report, timestamp);
+    await this.generateHumanReadableReport(report);
     
     return reportFile;
   }
 
-  async generateHumanReadableReport(report, timestamp) {
-    const summaryFile = path.join(RESULTS_PATH, `analysis-summary-${timestamp}.md`);
+  async generateHumanReadableReport(report) {
+    const summaryFile = path.join(this.runDir, 'analysis-summary.md');
     
     let markdown = `# Claude Code Benchmark Analysis Report
 

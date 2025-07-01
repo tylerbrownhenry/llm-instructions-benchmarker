@@ -40,12 +40,15 @@
 
 .name-input-container {
   margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
 .name-input-container label {
-  display: block;
   font-size: 18px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .name-input-container input {
@@ -53,8 +56,8 @@
   font-size: 16px;
   border: 2px solid #61dafb;
   border-radius: 4px;
-  background-color: #f0f0f0;
-  color: #282c34;
+  background-color: #282c34;
+  color: white;
   width: 250px;
   transition: border-color 0.3s;
 }
@@ -62,13 +65,28 @@
 .name-input-container input:focus {
   outline: none;
   border-color: #4fa8c5;
-  background-color: #ffffff;
+}
+
+.name-input-container input[aria-invalid="true"] {
+  border-color: #ff6b6b;
 }
 
 .error-message {
-  display: block;
   color: #ff6b6b;
   font-size: 14px;
-  margin-top: 8px;
+  margin-top: 5px;
+  max-width: 250px;
+  text-align: center;
+}
+
+.success-message {
+  color: #51cf66;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.greeting {
+  font-size: 24px;
+  margin-bottom: 20px;
   font-weight: 500;
 }

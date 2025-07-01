@@ -3,58 +3,56 @@ import './App.css';
 
 function App() {
   const [count, setCount] = useState(0);
-  const [name, setName] = useState('');
-  const [nameInput, setNameInput] = useState('');
-  const [error, setError] = useState('');
+  const [userName, setUserName] = useState('');
+  const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
     const savedName = localStorage.getItem('userName');
     if (savedName) {
-      setName(savedName);
-      setNameInput(savedName);
+      setUserName(savedName);
+      setInputValue(savedName);
     }
   }, []);
 
   const handleNameSubmit = (e) => {
     e.preventDefault();
-    const trimmedName = nameInput.trim();
-    
-    if (trimmedName.length === 0) {
-      setError('Please enter a valid name');
-      return;
+    const trimmedName = inputValue.trim();
+    if (trimmedName) {
+      setUserName(trimmedName);
+      localStorage.setItem('userName', trimmedName);
     }
-    
-    if (trimmedName.length > 50) {
-      setError('Name must be 50 characters or less');
-      return;
-    }
-    
-    setError('');
-    setName(trimmedName);
-    localStorage.setItem('userName', trimmedName);
   };
 
-  const greeting = name 
-    ? `Hello ${name}, your count is: ${count}`
-    : `Hello there, your count is: ${count}`;
+  const handleNameChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const getGreeting = () => {
+    if (userName) {
+      return `Hello ${userName}, your count is: ${count}`;
+    }
+    return `Hello there, your count is: ${count}`;
+  };
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>Benchmark React App</h1>
-        <form onSubmit={handleNameSubmit} className="name-form">
+        <form className="name-form" onSubmit={handleNameSubmit}>
           <input
             type="text"
             placeholder="Enter your name"
-            value={nameInput}
-            onChange={(e) => setNameInput(e.target.value)}
+            value={inputValue}
+            onChange={handleNameChange}
             className="name-input"
+            maxLength={50}
           />
-          <button type="submit">Save Name</button>
-          {error && <p className="error-message">{error}</p>}
+          <button type="submit" className="name-submit">
+            Set Name
+          </button>
         </form>
         <div className="counter">
-          <p>{greeting}</p>
+          <p className="greeting">{getGreeting()}</p>
           <button onClick={() => setCount(count + 1)}>
             Increment
           </button>

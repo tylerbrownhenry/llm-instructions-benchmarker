@@ -4,8 +4,6 @@ import './App.css';
 function App() {
   const [count, setCount] = useState(0);
   const [name, setName] = useState('');
-  const [error, setError] = useState('');
-  const [touched, setTouched] = useState(false);
 
   useEffect(() => {
     const savedName = localStorage.getItem('userName');
@@ -15,44 +13,27 @@ function App() {
   }, []);
 
   const handleNameChange = (e) => {
-    const newName = e.target.value;
-    const trimmedName = newName.trim();
-
-    if (touched) {
-      if (trimmedName === '') {
-        setError('Name cannot be empty');
-      } else if (trimmedName.length > 50) {
-        setError('Name must be 50 characters or less');
-      } else {
-        setError('');
-      }
+    let newName = e.target.value;
+    
+    // Truncate if longer than 50 characters
+    if (newName.length > 50) {
+      newName = newName.substring(0, 50);
     }
-
+    
     setName(newName);
     
-    if (trimmedName !== '') {
-      localStorage.setItem('userName', trimmedName);
-    }
-  };
-
-  const handleBlur = () => {
-    setTouched(true);
-    const trimmedName = name.trim();
+    // Save trimmed name to localStorage
+    const trimmedName = newName.trim();
     
-    if (trimmedName === '') {
-      setError('Name cannot be empty');
-    } else if (trimmedName.length > 50) {
-      setError('Name must be 50 characters or less');
+    try {
+      localStorage.setItem('userName', trimmedName);
+    } catch (error) {
+      console.error('Failed to save to localStorage:', error);
     }
   };
 
-  const getGreeting = () => {
-    const trimmedName = name.trim();
-    if (trimmedName) {
-      return `Hello ${trimmedName}, your count is: ${count}`;
-    }
-    return `Hello there, your count is: ${count}`;
-  };
+  const displayName = name.trim() || 'there';
+  const truncatedDisplayName = displayName.length > 50 ? displayName.substring(0, 50) : displayName;
 
   return (
     <div className="App">
@@ -64,13 +45,10 @@ function App() {
             placeholder="Enter your name"
             value={name}
             onChange={handleNameChange}
-            onBlur={handleBlur}
           />
-          {error && <p className="error-message">{error}</p>}
         </div>
-        <p className="greeting">{getGreeting()}</p>
         <div className="counter">
-          <p>Count: {count}</p>
+          <p>Hello {truncatedDisplayName}, your count is: {count}</p>
           <button onClick={() => setCount(count + 1)}>
             Increment
           </button>

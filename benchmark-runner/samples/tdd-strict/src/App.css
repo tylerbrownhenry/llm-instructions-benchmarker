@@ -37,3 +37,27 @@
 .counter button:hover {
   background-color: #4fa8c5;
 }
+
+.name-input-container {
+  margin: 20px 0;
+}
+
+.name-input-container input {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: 2px solid #61dafb;
+  border-radius: 4px;
+  background-color: #3a3f47;
+  color: white;
+  width: 300px;
+  transition: border-color 0.3s;
+}
+
+.name-input-container input:focus {
+  outline: none;
+  border-color: #4fa8c5;
+}
+
+.name-input-container input::placeholder {
+  color: #8a8e94;
+}

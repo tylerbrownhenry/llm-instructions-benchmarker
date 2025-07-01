@@ -15,6 +15,8 @@ class ClaudeSessionRunner {
     this.config = null;
     this.prompt = '';
     this.results = [];
+    this.runId = new Date().toISOString().replace(/[:.]/g, '-');
+    this.runDir = null;
   }
 
   async initialize() {
@@ -27,17 +29,48 @@ class ClaudeSessionRunner {
     // Ensure results directory exists
     await fs.ensureDir(RESULTS_PATH);
     
+    // Create run-specific directory
+    this.runDir = path.join(RESULTS_PATH, `run-${this.runId}`);
+    await fs.ensureDir(this.runDir);
+    
     console.log('🤖 Claude Code Session Runner initialized');
     console.log(`📋 Found ${this.config.scenarios.length} scenarios to run`);
+    console.log(`📁 Run directory: ${this.runDir}`);
   }
 
   async spawnClaudeSession(projectPath, scenarioId) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       console.log(`🚀 Starting Claude Code session for ${scenarioId}...`);
       
       const startTime = Date.now();
-      const logFile = path.join(RESULTS_PATH, `${scenarioId}-session.log`);
+      const logFile = path.join(this.runDir, `${scenarioId}-session.log`);
+      const changeLogFile = path.join(this.runDir, `${scenarioId}-changes.log`);
       const logStream = fs.createWriteStream(logFile);
+      const changeLogStream = fs.createWriteStream(changeLogFile);
+      
+      // Capture initial git state
+      const { spawn: gitSpawn } = require('child_process');
+      const captureGitState = (label) => {
+        return new Promise((resolve) => {
+          const gitProcess = gitSpawn('git', ['status', '--porcelain'], { cwd: projectPath });
+          let gitOutput = '';
+          
+          gitProcess.stdout.on('data', (data) => {
+            gitOutput += data.toString();
+          });
+          
+          gitProcess.on('close', () => {
+            changeLogStream.write(`\n=== ${label} ===\n`);
+            changeLogStream.write(`Timestamp: ${new Date().toISOString()}\n`);
+            changeLogStream.write(`Git Status:\n${gitOutput}\n`);
+            resolve(gitOutput);
+          });
+        });
+      };
+      
+      // Capture initial state
+      await captureGitState('BEFORE Claude Session');
+      changeLogStream.write(`\n=== SCENARIO: ${scenarioId} ===\n`);
       
       // Spawn Claude Code process
       const claudeProcess = spawn('claude', ['--print', '--dangerously-skip-permissions'], {
@@ -86,9 +119,51 @@ class ClaudeSessionRunner {
       }, this.config.settings.timeoutMinutes * 60 * 1000);
       
       // Handle process completion
-      claudeProcess.on('close', (code) => {
+      claudeProcess.on('close', async (code) => {
         clearTimeout(timeout);
         logStream.end();
+        
+        // Capture final git state and generate diff
+        await captureGitState('AFTER Claude Session');
+        
+        // Generate diff showing all changes made by Claude (excluding package-lock.json)
+        const diffProcess = gitSpawn('git', ['diff', 'HEAD', '--', '.', ':(exclude)package-lock.json'], { cwd: projectPath });
+        let diffOutput = '';
+        
+        diffProcess.stdout.on('data', (data) => {
+          diffOutput += data.toString();
+        });
+        
+        diffProcess.on('close', () => {
+          changeLogStream.write(`\n=== CHANGES MADE BY CLAUDE ===\n`);
+          if (diffOutput.trim()) {
+            changeLogStream.write(diffOutput);
+          } else {
+            changeLogStream.write('No changes detected\n');
+          }
+          
+          // Also show list of modified files
+          const statusProcess = gitSpawn('git', ['diff', '--name-status', 'HEAD'], { cwd: projectPath });
+          let statusOutput = '';
+          
+          statusProcess.stdout.on('data', (data) => {
+            statusOutput += data.toString();
+          });
+          
+          statusProcess.on('close', () => {
+            changeLogStream.write(`\n=== MODIFIED FILES ===\n`);
+            if (statusOutput) {
+              // Filter out package-lock.json from the file list display
+              const filteredStatus = statusOutput.split('\n')
+                .filter(line => !line.includes('package-lock.json'))
+                .join('\n');
+              changeLogStream.write(filteredStatus || 'No relevant files modified\n');
+            } else {
+              changeLogStream.write('No files modified\n');
+            }
+            changeLogStream.end();
+          });
+        });
         
         const endTime = Date.now();
         const duration = endTime - startTime;
@@ -103,7 +178,8 @@ class ClaudeSessionRunner {
           completed: sessionCompleted,
           outputLength: outputBuffer.length,
           errorLength: errorBuffer.length,
-          logFile
+          logFile,
+          changeLogFile
         };
         
         console.log(`${code === 0 ? '✅' : '❌'} Session ${scenarioId} completed in ${Math.round(duration/1000)}s`);
@@ -181,10 +257,10 @@ class ClaudeSessionRunner {
   }
 
   async saveResults() {
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const resultsFile = path.join(RESULTS_PATH, `benchmark-results-${timestamp}.json`);
+    const resultsFile = path.join(this.runDir, 'benchmark-results.json');
     
     const summary = {
+      runId: this.runId,
       timestamp: new Date().toISOString(),
       totalScenarios: this.config.scenarios.length,
       completedScenarios: this.results.length,

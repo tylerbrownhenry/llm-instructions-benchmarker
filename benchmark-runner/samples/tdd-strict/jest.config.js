@@ -1,12 +1,18 @@
 module.exports = {
   testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   transform: {
-    '^.+\\.(js|jsx)$': 'babel-jest',
+    '^.+\\.(js|jsx)$': 'babel-jest'
   },
   moduleFileExtensions: ['js', 'jsx'],
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-  testMatch: ['<rootDir>/tests/**/*.test.js'],
   moduleNameMapper: {
-    '\\.(css|less|scss|sass)$': '<rootDir>/tests/__mocks__/styleMock.js',
+    '\\.(css|less|sass|scss)$': '<rootDir>/mocks/styleMock.js'
   },
+  testMatch: [
+    '<rootDir>/tests/**/*.test.js'
+  ],
+  collectCoverageFrom: [
+    'src/**/*.{js,jsx}',
+    '!src/index.js'
+  ]
 };

@@ -1,51 +1,78 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import './App.css';
 
-const DEFAULT_GREETING = 'Hello there';
-const STORAGE_KEY = 'userName';
+const STORAGE_KEY_NAME = 'userName';
 const MAX_NAME_LENGTH = 50;
+const MIN_NAME_LENGTH = 1;
+const DEFAULT_GREETING = 'Hello there';
 
 function App() {
   const [count, setCount] = useState(0);
   const [name, setName] = useState('');
   const [nameError, setNameError] = useState('');
+  const [isNameSaved, setIsNameSaved] = useState(false);
 
   useEffect(() => {
-    const savedName = localStorage.getItem(STORAGE_KEY);
-    if (savedName) {
-      setName(savedName);
+    try {
+      const savedName = localStorage.getItem(STORAGE_KEY_NAME);
+      if (savedName) {
+        setName(savedName);
+        setIsNameSaved(true);
+      }
+    } catch (error) {
     }
   }, []);
 
-  const handleNameChange = (event) => {
-    const newName = event.target.value;
-    
-    if (newName.length > MAX_NAME_LENGTH) {
-      setNameError(`Name must be ${MAX_NAME_LENGTH} characters or less`);
-      return;
+  const validateName = useCallback((value) => {
+    if (value.length > MAX_NAME_LENGTH) {
+      return `Name must be ${MAX_NAME_LENGTH} characters or less`;
     }
-    
-    if (newName && !/^[a-zA-Z\s'-]+$/.test(newName)) {
-      setNameError('Name can only contain letters, spaces, hyphens, and apostrophes');
-      return;
+    if (value.trim().length > 0 && value.trim().length < MIN_NAME_LENGTH) {
+      return `Name must be at least ${MIN_NAME_LENGTH} character`;
     }
-    
-    setNameError('');
+    if (!/^[a-zA-Z\s]*$/.test(value)) {
+      return 'Name can only contain letters and spaces';
+    }
+    return '';
+  }, []);
+
+  const handleNameChange = useCallback((e) => {
+    const newName = e.target.value;
     setName(newName);
     
-    if (newName) {
-      localStorage.setItem(STORAGE_KEY, newName);
-    } else {
-      localStorage.removeItem(STORAGE_KEY);
+    const error = validateName(newName);
+    setNameError(error);
+    
+    if (!error && newName.trim()) {
+      try {
+        localStorage.setItem(STORAGE_KEY_NAME, newName.trim());
+        setIsNameSaved(true);
+      } catch (error) {
+        setNameError('Unable to save name');
+      }
+    } else if (!newName.trim()) {
+      try {
+        localStorage.removeItem(STORAGE_KEY_NAME);
+        setIsNameSaved(false);
+      } catch (error) {
+      }
     }
-  };
+  }, [validateName]);
 
-  const greeting = name ? `Hello ${name}` : DEFAULT_GREETING;
+  const greeting = useMemo(() => {
+    const userName = name.trim() || DEFAULT_GREETING;
+    return `${name.trim() ? `Hello ${userName}` : DEFAULT_GREETING}, your count is: ${count}`;
+  }, [name, count]);
+
+  const incrementCount = useCallback(() => setCount(prev => prev + 1), []);
+  const decrementCount = useCallback(() => setCount(prev => prev - 1), []);
+  const resetCount = useCallback(() => setCount(0), []);
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>Benchmark React App</h1>
+        
         <div className="name-input-container">
           <label htmlFor="name-input">
             Enter your name:
@@ -57,23 +84,31 @@ function App() {
             onChange={handleNameChange}
             placeholder="Your name"
             maxLength={MAX_NAME_LENGTH}
-            aria-describedby={nameError ? 'name-error' : undefined}
+            aria-label="User name input"
+            aria-describedby={nameError ? "name-error" : undefined}
+            aria-invalid={!!nameError}
           />
           {nameError && (
-            <span id="name-error" className="error-message" role="alert">
+            <div id="name-error" role="alert" className="error-message">
               {nameError}
-            </span>
+            </div>
+          )}
+          {isNameSaved && !nameError && name.trim() && (
+            <div className="success-message" role="status">
+              Name saved
+            </div>
           )}
         </div>
+        
         <div className="counter">
-          <p>{greeting}, your count is: {count}</p>
-          <button onClick={() => setCount(count + 1)}>
+          <p className="greeting">{greeting}</p>
+          <button onClick={incrementCount} aria-label="Increment count">
             Increment
           </button>
-          <button onClick={() => setCount(count - 1)}>
+          <button onClick={decrementCount} aria-label="Decrement count">
             Decrement
           </button>
-          <button onClick={() => setCount(0)}>
+          <button onClick={resetCount} aria-label="Reset count">
             Reset
           </button>
         </div>
