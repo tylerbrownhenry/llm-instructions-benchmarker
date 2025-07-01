@@ -1,0 +1,38 @@
+{
+  "name": "claude-code-benchmarker",
+  "version": "1.0.0",
+  "description": "Automated benchmarking system for Claude Code with different instruction configurations",
+  "main": "benchmark.js",
+  "scripts": {
+    "benchmark": "node benchmark.js",
+    "setup": "node scripts/setup.js",
+    "run": "node scripts/runner.js",
+    "analyze": "node scripts/analyzer.js",
+    "analyze-results": "node scripts/analyzer.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "bin": {
+    "claude-benchmark": "./benchmark.js"
+  },
+  "keywords": [
+    "claude-code",
+    "benchmark",
+    "automation",
+    "testing",
+    "ai",
+    "development"
+  ],
+  "author": "Claude Code Benchmarking System",
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "^11.0.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "."
+  }
+}

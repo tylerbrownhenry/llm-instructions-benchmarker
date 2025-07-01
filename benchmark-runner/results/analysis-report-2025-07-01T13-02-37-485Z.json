@@ -1,0 +1,27 @@
+{
+  "metadata": {
+    "generatedAt": "2025-07-01T13:02:37.485Z",
+    "benchmarkResults": "2025-07-01T13:02:37.478Z",
+    "analyzer": "Claude Code Benchmarker v1.0"
+  },
+  "summary": {
+    "totalScenarios": 0,
+    "avgCompletionTime": null,
+    "avgScore": null,
+    "avgLinesAdded": null
+  },
+  "rankings": {
+    "byOverallScore": [],
+    "byCompletionTime": [],
+    "byLinesAdded": [],
+    "byFeatureCompletion": []
+  },
+  "detailed": {},
+  "insights": {
+    "topPerformer": null,
+    "fastestCompletion": null,
+    "mostThorough": null,
+    "recommendations": []
+  },
+  "rawValidation": {}
+}
