@@ -1,0 +1,510 @@
+{
+  "project": {
+    "name": "agent-swarm-intelligence",
+    "type": "distributed-collective-system"
+  },
+
+  "swarmIntelligence": {
+    "architecture": "emergent-behavior",
+    "coordination": "stigmergy-based",
+    "decisionMaking": "collective-consensus",
+    "optimization": "swarm-optimization"
+  },
+
+  "agentSwarms": [
+    {
+      "name": "code-optimization-swarm",
+      "description": "Swarm of agents that collectively optimize code through emergent behaviors",
+      "size": 8,
+      "swarmType": "particle-swarm-optimization",
+      "agents": [
+        {
+          "name": "performance-scout",
+          "type": "scout-agent",
+          "behavior": "exploration",
+          "expertise": ["performance-analysis", "bottleneck-detection"],
+          "swarmRole": "exploration",
+          "pheromoneTrails": ["performance-hotspots", "optimization-opportunities"]
+        },
+        {
+          "name": "memory-optimizer", 
+          "type": "worker-agent",
+          "behavior": "exploitation",
+          "expertise": ["memory-management", "allocation-optimization"],
+          "swarmRole": "optimization",
+          "pheromoneTrails": ["memory-patterns", "allocation-efficiency"]
+        },
+        {
+          "name": "algorithm-enhancer",
+          "type": "worker-agent", 
+          "behavior": "exploitation",
+          "expertise": ["algorithm-analysis", "complexity-reduction"],
+          "swarmRole": "optimization",
+          "pheromoneTrails": ["algorithm-efficiency", "complexity-patterns"]
+        },
+        {
+          "name": "cache-strategist",
+          "type": "specialist-agent",
+          "behavior": "focused-optimization",
+          "expertise": ["caching-strategies", "data-locality"],
+          "swarmRole": "specialization",
+          "pheromoneTrails": ["cache-hits", "access-patterns"]
+        },
+        {
+          "name": "database-optimizer",
+          "type": "specialist-agent",
+          "behavior": "focused-optimization", 
+          "expertise": ["query-optimization", "index-strategy"],
+          "swarmRole": "specialization",
+          "pheromoneTrails": ["query-patterns", "index-efficiency"]
+        },
+        {
+          "name": "network-optimizer",
+          "type": "specialist-agent",
+          "behavior": "focused-optimization",
+          "expertise": ["network-optimization", "latency-reduction"],
+          "swarmRole": "specialization", 
+          "pheromoneTrails": ["network-patterns", "latency-hotspots"]
+        },
+        {
+          "name": "synthesis-coordinator",
+          "type": "queen-agent",
+          "behavior": "coordination",
+          "expertise": ["pattern-synthesis", "global-optimization"],
+          "swarmRole": "coordination",
+          "pheromoneTrails": ["global-patterns", "swarm-consensus"]
+        },
+        {
+          "name": "validation-sentinel",
+          "type": "guardian-agent",
+          "behavior": "validation",
+          "expertise": ["optimization-validation", "regression-detection"],
+          "swarmRole": "quality-assurance",
+          "pheromoneTrails": ["validation-results", "safety-markers"]
+        }
+      ]
+    },
+    {
+      "name": "bug-hunting-swarm",
+      "description": "Collective intelligence for finding and fixing bugs",
+      "size": 6,
+      "swarmType": "ant-colony-optimization",
+      "agents": [
+        {
+          "name": "error-scout",
+          "type": "scout-agent",
+          "behavior": "wide-exploration",
+          "expertise": ["error-detection", "anomaly-recognition"],
+          "swarmRole": "exploration",
+          "pheromoneTrails": ["error-traces", "suspicious-patterns"]
+        },
+        {
+          "name": "logic-tracer",
+          "type": "forager-agent",
+          "behavior": "path-following",
+          "expertise": ["control-flow", "logic-analysis"],
+          "swarmRole": "investigation",
+          "pheromoneTrails": ["execution-paths", "logic-branches"]
+        },
+        {
+          "name": "data-tracker",
+          "type": "forager-agent",
+          "behavior": "path-following",
+          "expertise": ["data-flow", "state-tracking"],
+          "swarmRole": "investigation", 
+          "pheromoneTrails": ["data-traces", "state-changes"]
+        },
+        {
+          "name": "pattern-matcher",
+          "type": "analyzer-agent",
+          "behavior": "pattern-recognition",
+          "expertise": ["bug-patterns", "anti-patterns"],
+          "swarmRole": "analysis",
+          "pheromoneTrails": ["known-patterns", "similar-bugs"]
+        },
+        {
+          "name": "fix-architect", 
+          "type": "constructor-agent",
+          "behavior": "solution-building",
+          "expertise": ["fix-strategies", "refactoring"],
+          "swarmRole": "construction",
+          "pheromoneTrails": ["fix-patterns", "solution-paths"]
+        },
+        {
+          "name": "swarm-coordinator",
+          "type": "queen-agent",
+          "behavior": "coordination",
+          "expertise": ["swarm-coordination", "collective-decision"],
+          "swarmRole": "coordination",
+          "pheromoneTrails": ["swarm-state", "collective-knowledge"]
+        }
+      ]
+    },
+    {
+      "name": "architecture-design-swarm",
+      "description": "Emergent architecture design through collective intelligence",
+      "size": 10,
+      "swarmType": "boid-flocking",
+      "agents": [
+        {
+          "name": "component-designer",
+          "type": "architect-agent", 
+          "behavior": "component-focus",
+          "expertise": ["component-design", "modularity"],
+          "swarmRole": "design",
+          "flockingRules": ["separation", "alignment", "cohesion"]
+        },
+        {
+          "name": "integration-planner",
+          "type": "architect-agent",
+          "behavior": "integration-focus", 
+          "expertise": ["system-integration", "interface-design"],
+          "swarmRole": "integration",
+          "flockingRules": ["separation", "alignment", "cohesion"]
+        },
+        {
+          "name": "scalability-analyst",
+          "type": "specialist-agent",
+          "behavior": "scalability-focus",
+          "expertise": ["horizontal-scaling", "load-distribution"],
+          "swarmRole": "analysis",
+          "flockingRules": ["separation", "alignment", "cohesion"]
+        },
+        {
+          "name": "security-architect",
+          "type": "specialist-agent",
+          "behavior": "security-focus",
+          "expertise": ["security-design", "threat-modeling"],
+          "swarmRole": "security",
+          "flockingRules": ["separation", "alignment", "cohesion"]
+        },
+        {
+          "name": "data-architect",
+          "type": "specialist-agent",
+          "behavior": "data-focus",
+          "expertise": ["data-modeling", "storage-strategy"],
+          "swarmRole": "data",
+          "flockingRules": ["separation", "alignment", "cohesion"]
+        },
+        {
+          "name": "api-designer",
+          "type": "interface-agent",
+          "behavior": "interface-focus",
+          "expertise": ["api-design", "contract-definition"],
+          "swarmRole": "interfaces",
+          "flockingRules": ["separation", "alignment", "cohesion"]
+        },
+        {
+          "name": "performance-architect",
+          "type": "specialist-agent",
+          "behavior": "performance-focus", 
+          "expertise": ["performance-design", "optimization-planning"],
+          "swarmRole": "performance",
+          "flockingRules": ["separation", "alignment", "cohesion"]
+        },
+        {
+          "name": "testing-strategist",
+          "type": "quality-agent",
+          "behavior": "quality-focus",
+          "expertise": ["test-architecture", "quality-strategy"],
+          "swarmRole": "quality",
+          "flockingRules": ["separation", "alignment", "cohesion"]
+        },
+        {
+          "name": "deployment-planner",
+          "type": "ops-agent",
+          "behavior": "deployment-focus",
+          "expertise": ["deployment-strategy", "infrastructure"],
+          "swarmRole": "operations",
+          "flockingRules": ["separation", "alignment", "cohesion"]
+        },
+        {
+          "name": "architecture-synthesizer",
+          "type": "leader-agent",
+          "behavior": "synthesis-focus",
+          "expertise": ["architecture-synthesis", "emergent-design"],
+          "swarmRole": "leadership",
+          "flockingRules": ["leadership", "guidance", "convergence"]
+        }
+      ]
+    }
+  ],
+
+  "swarmBehaviors": {
+    "stigmergy": {
+      "enabled": true,
+      "pheromoneDecay": 0.1,
+      "reinforcementStrength": 1.5,
+      "globalEvaporation": 0.02
+    },
+    "emergentIntelligence": {
+      "enabled": true,
+      "mechanisms": ["collective-sensing", "distributed-cognition", "swarm-learning"],
+      "convergenceCriteria": 0.85
+    },
+    "adaptiveBehavior": {
+      "enabled": true,
+      "learningRate": 0.1,
+      "explorationRate": 0.3,
+      "socialInfluence": 0.7
+    },
+    "collectiveDecisionMaking": {
+      "enabled": true,
+      "votingThreshold": 0.6,
+      "consensusAlgorithm": "ant-democracy",
+      "disagreementResolution": "swarm-mediation"
+    }
+  },
+
+  "swarmCommunication": {
+    "directMessaging": {
+      "enabled": true,
+      "range": "local-neighborhood",
+      "protocol": "agent-to-agent"
+    },
+    "indirectCommunication": {
+      "enabled": true,
+      "mechanism": "pheromone-trails",
+      "persistence": "environment-based"
+    },
+    "broadcastMessages": {
+      "enabled": true,
+      "scope": "swarm-wide",
+      "priority": "emergency-only"
+    },
+    "environmentalSensing": {
+      "enabled": true,
+      "sensors": ["code-quality", "performance-metrics", "error-rates"],
+      "updateFrequency": "continuous"
+    }
+  },
+
+  "emergentPatterns": {
+    "selfOrganization": {
+      "enabled": true,
+      "patterns": ["clustering", "specialization", "hierarchy-formation"],
+      "stabilityThreshold": 0.8
+    },
+    "collectiveLearning": {
+      "enabled": true,
+      "mechanisms": ["experience-sharing", "pattern-propagation", "knowledge-diffusion"],
+      "memoryPersistence": true
+    },
+    "adaptiveOptimization": {
+      "enabled": true,
+      "strategies": ["particle-swarm", "ant-colony", "genetic-algorithm"],
+      "fitnessFunction": "composite-quality-score"
+    },
+    "distributedProblemSolving": {
+      "enabled": true,
+      "decomposition": "automatic",
+      "workloadDistribution": "capability-based",
+      "solutionSynthesis": "emergent-consensus"
+    }
+  },
+
+  "swarmWorkflows": [
+    {
+      "name": "collective-code-optimization",
+      "description": "Swarm collectively optimizes code through emergent behavior",
+      "swarm": "code-optimization-swarm",
+      "phases": [
+        {
+          "name": "exploration",
+          "behavior": "parallel-exploration",
+          "agents": ["performance-scout"],
+          "duration": "30s",
+          "pheromoneDeposition": "high"
+        },
+        {
+          "name": "specialization",
+          "behavior": "focused-optimization",
+          "agents": ["memory-optimizer", "algorithm-enhancer", "cache-strategist", "database-optimizer", "network-optimizer"],
+          "duration": "120s",
+          "dependsOn": ["exploration"],
+          "pheromoneReinforcement": true
+        },
+        {
+          "name": "synthesis",
+          "behavior": "convergent-optimization",
+          "agents": ["synthesis-coordinator"],
+          "duration": "60s",
+          "dependsOn": ["specialization"],
+          "collectiveDecision": true
+        },
+        {
+          "name": "validation",
+          "behavior": "quality-assurance",
+          "agents": ["validation-sentinel"],
+          "duration": "30s",
+          "dependsOn": ["synthesis"],
+          "safeguards": true
+        }
+      ]
+    },
+    {
+      "name": "emergent-bug-hunting",
+      "description": "Collective intelligence discovers and fixes bugs",
+      "swarm": "bug-hunting-swarm", 
+      "phases": [
+        {
+          "name": "foraging",
+          "behavior": "exploration-foraging",
+          "agents": ["error-scout", "logic-tracer", "data-tracker"],
+          "duration": "90s",
+          "pheromoneTrails": ["error-traces", "execution-paths", "data-traces"]
+        },
+        {
+          "name": "pattern-analysis",
+          "behavior": "collective-recognition",
+          "agents": ["pattern-matcher"],
+          "duration": "60s", 
+          "dependsOn": ["foraging"],
+          "patternMatching": true
+        },
+        {
+          "name": "solution-construction",
+          "behavior": "collaborative-building",
+          "agents": ["fix-architect"],
+          "duration": "120s",
+          "dependsOn": ["pattern-analysis"],
+          "constructive": true
+        },
+        {
+          "name": "swarm-consensus",
+          "behavior": "collective-validation",
+          "agents": ["swarm-coordinator"],
+          "duration": "45s",
+          "dependsOn": ["solution-construction"],
+          "consensusRequired": true
+        }
+      ]
+    },
+    {
+      "name": "flocking-architecture-design",
+      "description": "Architecture emerges through flocking behavior",
+      "swarm": "architecture-design-swarm",
+      "phases": [
+        {
+          "name": "initial-alignment",
+          "behavior": "flocking-initialization",
+          "agents": ["all"],
+          "duration": "30s",
+          "flockingRules": ["separation", "alignment", "cohesion"]
+        },
+        {
+          "name": "emergent-design",
+          "behavior": "collaborative-flocking",
+          "agents": ["component-designer", "integration-planner", "scalability-analyst", "security-architect", "data-architect", "api-designer"],
+          "duration": "180s",
+          "dependsOn": ["initial-alignment"],
+          "emergentBehavior": true
+        },
+        {
+          "name": "specialization-convergence",
+          "behavior": "expertise-clustering", 
+          "agents": ["performance-architect", "testing-strategist", "deployment-planner"],
+          "duration": "120s",
+          "dependsOn": ["emergent-design"],
+          "specialization": true
+        },
+        {
+          "name": "architecture-synthesis",
+          "behavior": "leader-guided-convergence",
+          "agents": ["architecture-synthesizer"],
+          "duration": "90s",
+          "dependsOn": ["specialization-convergence"],
+          "leadershipBehavior": true
+        }
+      ]
+    }
+  ],
+
+  "agents": [
+    {
+      "name": "swarm-coordinator",
+      "description": "Master coordinator that manages agent swarms and emergent behaviors",
+      "instructions": "Coordinate multiple agent swarms, monitor emergent behaviors, and facilitate collective intelligence. Manage pheromone trails, swarm communication, and adaptive optimization.",
+      "tools": ["Read", "Write", "Edit", "Bash"],
+      "role": "swarm-orchestration"
+    }
+  ],
+
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": "Edit|Write",
+      "command": "node .claude/scripts/swarm-coordinator.js activate --swarm=code-optimization-swarm --trigger=\"code_change\" --file=\"$CLAUDE_TOOL_INPUT_FILE_PATH\""
+    },
+    {
+      "event": "PreToolUse",
+      "matcher": "Bash",
+      "command": "node .claude/scripts/swarm-coordinator.js observe --swarm=bug-hunting-swarm --trigger=\"command_execution\" --command=\"$CLAUDE_TOOL_INPUT_COMMAND\""
+    },
+    {
+      "event": "Stop",
+      "matcher": "*",
+      "command": "node .claude/scripts/swarm-coordinator.js synthesize --action=session_end --swarms=all"
+    }
+  ],
+
+  "collectiveIntelligence": {
+    "swarmIQ": {
+      "enabled": true,
+      "measurement": "emergent-capability",
+      "factors": ["diversity", "connectivity", "cooperation"],
+      "threshold": 0.75
+    },
+    "distributedCognition": {
+      "enabled": true,
+      "mechanisms": ["parallel-processing", "knowledge-fusion", "insight-emergence"],
+      "cognitiveLoad": "distributed"
+    },
+    "metacognition": {
+      "enabled": true,
+      "swarmAwareness": true,
+      "behaviorReflection": true,
+      "strategyAdaptation": true
+    }
+  },
+
+  "optimization": {
+    "fitnessFunction": {
+      "codeQuality": 0.3,
+      "performance": 0.25, 
+      "security": 0.2,
+      "maintainability": 0.15,
+      "innovation": 0.1
+    },
+    "evolutionaryPressure": {
+      "selectionPressure": 0.7,
+      "mutationRate": 0.05,
+      "crossoverRate": 0.3
+    },
+    "convergenceCriteria": {
+      "maxIterations": 100,
+      "stagnationThreshold": 10,
+      "improvementThreshold": 0.01
+    }
+  },
+
+  "monitoring": {
+    "swarmMetrics": {
+      "coherence": true,
+      "diversity": true,
+      "emergentBehaviors": true,
+      "collectivePerformance": true
+    },
+    "visualizations": {
+      "swarmMovement": true,
+      "pheromoneTrails": true,
+      "emergentPatterns": true,
+      "collectiveDecisions": true
+    },
+    "dashboard": {
+      "enabled": true,
+      "updateFrequency": "1s",
+      "visualizationType": "swarm-intelligence"
+    }
+  }
+}

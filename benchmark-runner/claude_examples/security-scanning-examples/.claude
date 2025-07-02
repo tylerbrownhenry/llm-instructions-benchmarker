@@ -1,0 +1,61 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [[ \"$CLAUDE_TOOL_INPUT_FILE_PATH\" == *.js || \"$CLAUDE_TOOL_INPUT_FILE_PATH\" == *.ts || \"$CLAUDE_TOOL_INPUT_FILE_PATH\" == *.jsx || \"$CLAUDE_TOOL_INPUT_FILE_PATH\" == *.tsx ]]; then npx semgrep --config=auto \"$CLAUDE_TOOL_INPUT_FILE_PATH\" --json > /tmp/semgrep_results.json 2>/dev/null || true; fi"
+          },
+          {
+            "type": "command",
+            "command": "if [[ \"$CLAUDE_TOOL_INPUT_FILE_PATH\" == package.json ]]; then npm audit --audit-level=high --json > /tmp/audit_results.json 2>/dev/null || true; fi"
+          },
+          {
+            "type": "command",
+            "command": "if [[ \"$CLAUDE_TOOL_INPUT_FILE_PATH\" == *.env* ]]; then echo \"WARNING: Environment file modified. Review for secrets.\" >> .claude/security.log; fi"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"$(date): Bash command logged\" | tee -a .claude/security.log"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f /tmp/semgrep_results.json ]; then echo \"Security scan completed. Check results in /tmp/semgrep_results.json\"; fi"
+          }
+        ]
+      }
+    ]
+  },
+  
+  "security": {
+    "scan_on_save": true,
+    "tools": ["semgrep", "npm-audit", "bandit", "safety"],
+    "block_secrets": true,
+    "alert_on_sensitive": true
+  },
+  
+  "permissions": {
+    "granted": "limited",
+    "auto_approve": {
+      "file_operations": ["src/**/*.js", "src/**/*.ts", "*.md"],
+      "bash_commands": ["npm audit", "npx semgrep", "git status"]
+    },
+    "require_confirmation": ["rm -rf", "sudo", "curl", "wget"]
+  }
+}

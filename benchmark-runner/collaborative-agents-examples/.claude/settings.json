@@ -1,0 +1,360 @@
+{
+  "project": {
+    "name": "collaborative-agent-teams",
+    "type": "synchronized-multi-agent"
+  },
+  
+  "agentTeams": [
+    {
+      "name": "code-review-team",
+      "description": "Synchronized team for comprehensive code review",
+      "collaboration": "synchronous",
+      "members": [
+        {
+          "name": "syntax-reviewer",
+          "role": "syntax-analysis",
+          "expertise": ["javascript", "typescript", "syntax-validation"],
+          "waitFor": [],
+          "provides": ["syntax-report", "parse-errors"]
+        },
+        {
+          "name": "logic-reviewer", 
+          "role": "logic-analysis",
+          "expertise": ["algorithms", "logic-flow", "edge-cases"],
+          "waitFor": ["syntax-reviewer"],
+          "provides": ["logic-report", "complexity-analysis"]
+        },
+        {
+          "name": "security-reviewer",
+          "role": "security-analysis", 
+          "expertise": ["security-patterns", "vulnerabilities", "best-practices"],
+          "waitFor": ["syntax-reviewer"],
+          "provides": ["security-report", "vulnerability-list"]
+        },
+        {
+          "name": "style-reviewer",
+          "role": "style-analysis",
+          "expertise": ["code-style", "formatting", "conventions"],
+          "waitFor": ["syntax-reviewer"],
+          "provides": ["style-report", "formatting-suggestions"]
+        },
+        {
+          "name": "integration-reviewer",
+          "role": "integration-analysis",
+          "expertise": ["dependencies", "api-usage", "integration-patterns"],
+          "waitFor": ["logic-reviewer", "security-reviewer"],
+          "provides": ["integration-report", "dependency-analysis"]
+        },
+        {
+          "name": "final-synthesizer",
+          "role": "synthesis",
+          "expertise": ["report-aggregation", "decision-making", "recommendations"],
+          "waitFor": ["logic-reviewer", "security-reviewer", "style-reviewer", "integration-reviewer"],
+          "provides": ["final-review", "actionable-recommendations"]
+        }
+      ],
+      "sharedState": {
+        "codeArtifacts": {},
+        "findings": {},
+        "recommendations": {},
+        "consensus": {}
+      },
+      "coordination": {
+        "method": "shared-memory",
+        "syncPoints": ["syntax-complete", "analysis-complete", "synthesis-complete"],
+        "timeout": 300000
+      }
+    },
+    {
+      "name": "feature-development-team",
+      "description": "Synchronized team for end-to-end feature development",
+      "collaboration": "synchronous",
+      "members": [
+        {
+          "name": "requirements-analyst",
+          "role": "requirement-analysis",
+          "expertise": ["user-stories", "acceptance-criteria", "edge-cases"],
+          "waitFor": [],
+          "provides": ["requirements-spec", "test-scenarios"]
+        },
+        {
+          "name": "api-designer",
+          "role": "api-design",
+          "expertise": ["rest-apis", "graphql", "data-modeling"],
+          "waitFor": ["requirements-analyst"],
+          "provides": ["api-specification", "data-models"]
+        },
+        {
+          "name": "frontend-architect",
+          "role": "frontend-design",
+          "expertise": ["react", "component-design", "state-management"],
+          "waitFor": ["requirements-analyst", "api-designer"],
+          "provides": ["component-architecture", "state-design"]
+        },
+        {
+          "name": "backend-architect", 
+          "role": "backend-design",
+          "expertise": ["microservices", "databases", "scalability"],
+          "waitFor": ["requirements-analyst", "api-designer"],
+          "provides": ["service-architecture", "database-design"]
+        },
+        {
+          "name": "test-strategist",
+          "role": "test-strategy",
+          "expertise": ["test-planning", "automation", "quality-assurance"],
+          "waitFor": ["api-designer", "frontend-architect", "backend-architect"],
+          "provides": ["test-strategy", "automation-plan"]
+        },
+        {
+          "name": "integration-coordinator",
+          "role": "integration-planning",
+          "expertise": ["system-integration", "deployment", "monitoring"],
+          "waitFor": ["frontend-architect", "backend-architect", "test-strategist"],
+          "provides": ["integration-plan", "deployment-strategy"]
+        }
+      ],
+      "sharedState": {
+        "requirements": {},
+        "specifications": {},
+        "architectures": {},
+        "strategies": {}
+      },
+      "coordination": {
+        "method": "event-driven",
+        "syncPoints": ["requirements-ready", "design-complete", "planning-complete"],
+        "timeout": 600000
+      }
+    },
+    {
+      "name": "debugging-team",
+      "description": "Real-time collaborative debugging team",
+      "collaboration": "synchronous",
+      "members": [
+        {
+          "name": "error-detective",
+          "role": "error-identification",
+          "expertise": ["stack-traces", "error-patterns", "exception-analysis"],
+          "waitFor": [],
+          "provides": ["error-catalog", "failure-points"]
+        },
+        {
+          "name": "data-investigator",
+          "role": "data-analysis", 
+          "expertise": ["data-flow", "state-inspection", "variable-tracking"],
+          "waitFor": ["error-detective"],
+          "provides": ["data-report", "state-analysis"]
+        },
+        {
+          "name": "flow-tracer",
+          "role": "execution-tracing",
+          "expertise": ["control-flow", "call-stacks", "execution-paths"],
+          "waitFor": ["error-detective"],
+          "provides": ["flow-analysis", "execution-trace"]
+        },
+        {
+          "name": "hypothesis-generator",
+          "role": "hypothesis-formation",
+          "expertise": ["root-cause-analysis", "pattern-recognition", "deduction"],
+          "waitFor": ["data-investigator", "flow-tracer"],
+          "provides": ["hypotheses", "probable-causes"]
+        },
+        {
+          "name": "solution-architect",
+          "role": "solution-design",
+          "expertise": ["fix-strategies", "refactoring", "prevention"],
+          "waitFor": ["hypothesis-generator"],
+          "provides": ["solution-options", "implementation-plan"]
+        },
+        {
+          "name": "verification-specialist",
+          "role": "solution-verification",
+          "expertise": ["testing", "validation", "regression-prevention"],
+          "waitFor": ["solution-architect"],
+          "provides": ["verification-plan", "test-cases"]
+        }
+      ],
+      "sharedState": {
+        "errorContext": {},
+        "analysisResults": {},
+        "hypotheses": {},
+        "solutions": {}
+      },
+      "coordination": {
+        "method": "real-time-sync",
+        "syncPoints": ["error-identified", "analysis-complete", "hypothesis-formed", "solution-ready"],
+        "timeout": 180000
+      }
+    }
+  ],
+
+  "agents": [
+    {
+      "name": "team-coordinator",
+      "description": "Master coordinator that manages collaborative agent teams",
+      "instructions": "Coordinate multiple agent teams working synchronously. Manage shared state, synchronization points, and cross-team communication.",
+      "tools": ["Read", "Write", "Edit", "Bash"],
+      "role": "orchestration"
+    }
+  ],
+
+  "collaboration": {
+    "synchronization": {
+      "mechanism": "barrier-sync",
+      "timeout": 300000,
+      "retryAttempts": 3
+    },
+    "communication": {
+      "realTime": true,
+      "channels": ["shared-memory", "message-passing", "event-bus"],
+      "persistence": true
+    },
+    "sharedResources": {
+      "memoryPool": "2GB",
+      "fileSystem": ".claude/shared/",
+      "database": ".claude/shared/state.db"
+    },
+    "conflictResolution": {
+      "strategy": "consensus-based",
+      "votingThreshold": 0.6,
+      "tieBreaker": "expertise-weighted"
+    }
+  },
+
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": "Edit|Write",
+      "command": "node .claude/scripts/team-coordinator.js activate --team=code-review-team --trigger=\"$CLAUDE_TOOL_INPUT_FILE_PATH\""
+    },
+    {
+      "event": "PreToolUse", 
+      "matcher": "Bash",
+      "command": "node .claude/scripts/team-coordinator.js observe --command=\"$CLAUDE_TOOL_INPUT_COMMAND\" --teams=debugging-team"
+    },
+    {
+      "event": "Stop",
+      "matcher": "*",
+      "command": "node .claude/scripts/team-coordinator.js synchronize --action=session_end"
+    }
+  ],
+
+  "teamWorkflows": {
+    "collaborative-code-review": {
+      "description": "Multiple agents review code simultaneously with real-time coordination",
+      "team": "code-review-team",
+      "phases": [
+        {
+          "name": "parallel-analysis",
+          "agents": ["syntax-reviewer", "security-reviewer", "style-reviewer"],
+          "mode": "parallel",
+          "syncPoint": "analysis-complete"
+        },
+        {
+          "name": "deep-analysis", 
+          "agents": ["logic-reviewer", "integration-reviewer"],
+          "mode": "parallel",
+          "dependsOn": ["analysis-complete"],
+          "syncPoint": "deep-analysis-complete"
+        },
+        {
+          "name": "synthesis",
+          "agents": ["final-synthesizer"],
+          "mode": "sequential",
+          "dependsOn": ["deep-analysis-complete"],
+          "syncPoint": "synthesis-complete"
+        }
+      ]
+    },
+    "collaborative-feature-development": {
+      "description": "End-to-end feature development with synchronized team collaboration",
+      "team": "feature-development-team", 
+      "phases": [
+        {
+          "name": "requirements-gathering",
+          "agents": ["requirements-analyst"],
+          "mode": "sequential",
+          "syncPoint": "requirements-ready"
+        },
+        {
+          "name": "architecture-design",
+          "agents": ["api-designer", "frontend-architect", "backend-architect"],
+          "mode": "parallel",
+          "dependsOn": ["requirements-ready"],
+          "syncPoint": "design-complete"
+        },
+        {
+          "name": "strategy-planning",
+          "agents": ["test-strategist", "integration-coordinator"],
+          "mode": "parallel", 
+          "dependsOn": ["design-complete"],
+          "syncPoint": "planning-complete"
+        }
+      ]
+    },
+    "collaborative-debugging": {
+      "description": "Real-time collaborative debugging with synchronized investigation",
+      "team": "debugging-team",
+      "phases": [
+        {
+          "name": "error-identification",
+          "agents": ["error-detective"],
+          "mode": "sequential",
+          "syncPoint": "error-identified"
+        },
+        {
+          "name": "parallel-investigation",
+          "agents": ["data-investigator", "flow-tracer"],
+          "mode": "parallel",
+          "dependsOn": ["error-identified"], 
+          "syncPoint": "investigation-complete"
+        },
+        {
+          "name": "solution-development",
+          "agents": ["hypothesis-generator", "solution-architect", "verification-specialist"],
+          "mode": "pipeline",
+          "dependsOn": ["investigation-complete"],
+          "syncPoint": "solution-ready"
+        }
+      ]
+    }
+  },
+
+  "intelligence": {
+    "collectiveDecisionMaking": {
+      "enabled": true,
+      "consensus": {
+        "algorithm": "byzantine-fault-tolerant",
+        "quorum": 0.67,
+        "maxRounds": 5
+      },
+      "expertise": {
+        "weighted": true,
+        "dynamic": true,
+        "learning": true
+      }
+    },
+    "knowledgeSharing": {
+      "enabled": true,
+      "mechanisms": ["direct-transfer", "observation-learning", "experience-sharing"],
+      "persistence": true
+    },
+    "emergentBehaviors": {
+      "enabled": true,
+      "patterns": ["swarm-intelligence", "collective-problem-solving", "distributed-cognition"]
+    }
+  },
+
+  "monitoring": {
+    "teamMetrics": {
+      "collaborationEfficiency": true,
+      "synchronizationOverhead": true,
+      "consensusTime": true,
+      "knowledgeTransfer": true
+    },
+    "realTimeVisualization": {
+      "enabled": true,
+      "dashboard": ".claude/dashboard.html",
+      "updateInterval": 1000
+    }
+  }
+}

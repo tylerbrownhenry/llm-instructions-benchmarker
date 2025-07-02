@@ -1,0 +1,280 @@
+{
+  "project": {
+    "name": "agent-orchestration-system",
+    "type": "multi-agent-ecosystem"
+  },
+  
+  "agentTypes": {
+    "reusable": {
+      "description": "Long-running agents that handle multiple tasks",
+      "lifecycle": "persistent",
+      "maxInstances": 3,
+      "shareResources": true
+    },
+    "single-use": {
+      "description": "Ephemeral agents created for specific one-time tasks",
+      "lifecycle": "task-specific",
+      "maxInstances": 10,
+      "shareResources": false
+    },
+    "pool": {
+      "description": "Pool of identical agents for load balancing",
+      "lifecycle": "pooled",
+      "maxInstances": 5,
+      "shareResources": true
+    }
+  },
+
+  "agents": [
+    {
+      "name": "build-manager",
+      "type": "reusable",
+      "description": "Persistent agent managing build processes and dependencies",
+      "instructions": "Coordinate build processes, manage dependencies, cache artifacts, and optimize build performance.",
+      "tools": ["Read", "Write", "Bash"],
+      "capabilities": ["build", "dependency-management", "caching"],
+      "resources": {
+        "memory": "512MB",
+        "timeout": "600000",
+        "priority": "high"
+      },
+      "triggerPatterns": ["package.json", "*.config.js", "Dockerfile", "Makefile"],
+      "maxConcurrentTasks": 3
+    },
+    {
+      "name": "test-coordinator", 
+      "type": "reusable",
+      "description": "Persistent agent coordinating all testing activities",
+      "instructions": "Manage test execution, coordinate test types, handle test data, and generate reports.",
+      "tools": ["Read", "Write", "Bash"],
+      "capabilities": ["test-execution", "test-coordination", "reporting"],
+      "resources": {
+        "memory": "256MB", 
+        "timeout": "300000",
+        "priority": "high"
+      },
+      "triggerPatterns": ["**/*.test.*", "**/*.spec.*", "test/**/*"],
+      "maxConcurrentTasks": 2
+    },
+    {
+      "name": "quality-auditor",
+      "type": "reusable", 
+      "description": "Persistent agent for code quality monitoring",
+      "instructions": "Monitor code quality metrics, run static analysis, enforce standards, and track quality trends.",
+      "tools": ["Read", "Write", "Bash", "Grep"],
+      "capabilities": ["static-analysis", "quality-metrics", "standards-enforcement"],
+      "resources": {
+        "memory": "256MB",
+        "timeout": "120000", 
+        "priority": "medium"
+      },
+      "triggerPatterns": ["**/*.js", "**/*.ts", "**/*.jsx", "**/*.tsx"],
+      "maxConcurrentTasks": 1
+    },
+    {
+      "name": "file-processor",
+      "type": "single-use",
+      "description": "Ephemeral agent for specific file processing tasks",
+      "instructions": "Process individual files based on type - convert, validate, transform, or analyze as needed.",
+      "tools": ["Read", "Write", "Edit"],
+      "capabilities": ["file-processing", "validation", "transformation"],
+      "resources": {
+        "memory": "128MB",
+        "timeout": "60000",
+        "priority": "low"
+      },
+      "spawnConditions": {
+        "fileTypes": [".md", ".json", ".yaml", ".xml"],
+        "actions": ["validate", "transform", "process"]
+      }
+    },
+    {
+      "name": "git-handler",
+      "type": "single-use",
+      "description": "Ephemeral agent for Git operations",
+      "instructions": "Handle specific Git operations like commits, merges, branch management, and repository analysis.",
+      "tools": ["Bash", "Read"],
+      "capabilities": ["git-operations", "branch-management", "commit-analysis"],
+      "resources": {
+        "memory": "64MB",
+        "timeout": "30000",
+        "priority": "medium"
+      },
+      "spawnConditions": {
+        "gitEvents": ["pre-commit", "post-merge", "branch-create"],
+        "actions": ["commit", "merge", "analyze"]
+      }
+    },
+    {
+      "name": "security-scanner",
+      "type": "single-use",
+      "description": "Ephemeral agent for security scanning tasks",
+      "instructions": "Perform security scans, vulnerability assessment, and compliance checks for specific files or changes.",
+      "tools": ["Read", "Bash", "Grep"],
+      "capabilities": ["security-scanning", "vulnerability-assessment", "compliance"],
+      "resources": {
+        "memory": "256MB",
+        "timeout": "180000",
+        "priority": "high"
+      },
+      "spawnConditions": {
+        "securityEvents": ["dependency-change", "config-change", "code-change"],
+        "triggers": ["package-lock.json", "*.env*", "security/**/*"]
+      }
+    },
+    {
+      "name": "worker-pool-agent",
+      "type": "pool",
+      "description": "Generic worker agent in a managed pool",
+      "instructions": "Handle generic tasks that can be distributed across multiple identical workers.",
+      "tools": ["Read", "Write", "Edit", "Bash"],
+      "capabilities": ["general-processing", "parallel-execution", "load-balancing"],
+      "resources": {
+        "memory": "128MB",
+        "timeout": "120000",
+        "priority": "medium"
+      },
+      "poolConfig": {
+        "minInstances": 2,
+        "maxInstances": 5,
+        "scaleUpThreshold": 3,
+        "scaleDownThreshold": 1
+      }
+    }
+  ],
+
+  "orchestration": {
+    "scheduler": {
+      "algorithm": "priority-queue",
+      "loadBalancing": true,
+      "resourceAware": true
+    },
+    "taskRouting": {
+      "rules": [
+        {
+          "condition": "task.type === 'build'",
+          "agent": "build-manager",
+          "priority": "high"
+        },
+        {
+          "condition": "task.type === 'test'", 
+          "agent": "test-coordinator",
+          "priority": "high"
+        },
+        {
+          "condition": "task.type === 'quality'",
+          "agent": "quality-auditor",
+          "priority": "medium"
+        },
+        {
+          "condition": "task.file && task.file.endsWith('.md')",
+          "agent": "file-processor",
+          "spawn": "new"
+        },
+        {
+          "condition": "task.gitOperation === true",
+          "agent": "git-handler", 
+          "spawn": "new"
+        },
+        {
+          "condition": "task.security === true",
+          "agent": "security-scanner",
+          "spawn": "new"
+        },
+        {
+          "condition": "task.parallel === true",
+          "agent": "worker-pool-agent",
+          "distribution": "round-robin"
+        }
+      ]
+    },
+    "resourceManagement": {
+      "totalMemoryLimit": "2GB",
+      "maxConcurrentAgents": 15,
+      "gcInterval": 300000,
+      "resourceMonitoring": true
+    }
+  },
+
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": "Edit|Write", 
+      "command": "node .claude/scripts/orchestrator.js route --file=\"$CLAUDE_TOOL_INPUT_FILE_PATH\" --action=\"file_changed\""
+    },
+    {
+      "event": "PostToolUse",
+      "matcher": "Bash",
+      "command": "node .claude/scripts/orchestrator.js route --command=\"$CLAUDE_TOOL_INPUT_COMMAND\" --action=\"command_executed\""
+    },
+    {
+      "event": "PreToolUse",
+      "matcher": "*",
+      "command": "node .claude/scripts/orchestrator.js log --event=\"tool_use\" --tool=\"$CLAUDE_TOOL_NAME\""
+    },
+    {
+      "event": "Stop",
+      "matcher": "*",
+      "command": "node .claude/scripts/orchestrator.js cleanup --reason=\"session_end\""
+    }
+  ],
+
+  "agentLifecycle": {
+    "startup": {
+      "persistent": ["build-manager", "test-coordinator", "quality-auditor"],
+      "pooled": ["worker-pool-agent"]
+    },
+    "shutdown": {
+      "gracePeriod": 30000,
+      "forceKillAfter": 60000,
+      "saveState": true
+    },
+    "healthCheck": {
+      "interval": 60000,
+      "timeout": 5000,
+      "restartOnFailure": true
+    }
+  },
+
+  "communication": {
+    "channels": {
+      "task-queue": {
+        "type": "priority-queue",
+        "persistence": true
+      },
+      "results": {
+        "type": "pub-sub",
+        "persistence": false
+      },
+      "events": {
+        "type": "broadcast",
+        "persistence": false
+      }
+    },
+    "protocols": {
+      "ipc": "node-ipc",
+      "http": "express",
+      "websocket": "ws"
+    }
+  },
+
+  "monitoring": {
+    "metrics": {
+      "agentUtilization": true,
+      "taskThroughput": true,
+      "errorRates": true,
+      "resourceUsage": true
+    },
+    "alerts": {
+      "highMemoryUsage": 0.8,
+      "highErrorRate": 0.1,
+      "agentFailure": "immediate",
+      "queueBacklog": 100
+    },
+    "reporting": {
+      "interval": 300000,
+      "format": "json",
+      "destination": ".claude/reports/"
+    }
+  }
+}

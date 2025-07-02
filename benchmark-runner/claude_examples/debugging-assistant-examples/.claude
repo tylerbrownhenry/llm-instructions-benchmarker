@@ -1,0 +1,89 @@
+{
+  "debugging": {
+    "auto_analyze": true,
+    "stack_trace_parsing": true,
+    "error_context": true,
+    "solution_suggestions": true
+  },
+
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [[ $CLAUDE_TOOL_OUTPUT == *\"Error\"* || $CLAUDE_TOOL_OUTPUT == *\"error\"* ]]; then echo \"Error detected in command output\" >> .claude/debug.log; fi"
+          },
+          {
+            "type": "command",
+            "command": "if [[ $CLAUDE_TOOL_INPUT_COMMAND == *\"npm test\"* && $CLAUDE_TOOL_OUTPUT == *\"FAIL\"* ]]; then echo \"Test failure detected - analyzing...\" >> .claude/debug.log; fi"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [[ \"$CLAUDE_TOOL_INPUT_FILE_PATH\" == *.js || \"$CLAUDE_TOOL_INPUT_FILE_PATH\" == *.ts ]]; then node -c \"$CLAUDE_TOOL_INPUT_FILE_PATH\" 2>> .claude/syntax-check.log || echo \"Syntax error in $CLAUDE_TOOL_INPUT_FILE_PATH\" >> .claude/debug.log; fi"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -s .claude/debug.log ]; then echo \"Debug issues detected:\"; cat .claude/debug.log; rm .claude/debug.log; fi"
+          }
+        ]
+      }
+    ]
+  },
+
+  "workflows": {
+    "debug-test-failure": {
+      "description": "Analyze and fix failing tests",
+      "steps": [
+        {"command": "npm test -- --verbose"},
+        {"command": "npm test -- --coverage"},
+        {"command": "cat coverage/lcov-report/index.html | grep -A 5 'uncovered'"}
+      ]
+    },
+    "debug-runtime-error": {
+      "description": "Debug production runtime errors",
+      "steps": [
+        {"command": "tail -n 100 logs/error.log"},
+        {"command": "npm run dev"},
+        {"command": "curl -f http://localhost:3000/health || echo 'Health check failed'"}
+      ]
+    },
+    "analyze-performance": {
+      "description": "Performance debugging and profiling",
+      "steps": [
+        {"command": "npm run build:analyze"},
+        {"command": "npm run lighthouse"},
+        {"command": "npm run profile:memory"}
+      ]
+    }
+  },
+
+  "ai_debugging": {
+    "error_analysis": true,
+    "stack_trace_explanation": true,
+    "fix_suggestions": true,
+    "code_review_for_bugs": true,
+    "performance_insights": true
+  },
+
+  "tools": {
+    "debugger": "node --inspect",
+    "profiler": "clinic.js",
+    "memory_analyzer": "heapdump",
+    "log_analyzer": "winston",
+    "trace_analyzer": "0x"
+  }
+}

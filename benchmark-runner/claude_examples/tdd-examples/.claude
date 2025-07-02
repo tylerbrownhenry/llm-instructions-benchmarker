@@ -1,0 +1,59 @@
+{
+  "workflows": {
+    "tdd-cycle": {
+      "description": "Test-Driven Development workflow",
+      "steps": [
+        {
+          "name": "write-failing-test",
+          "description": "Write a failing test first",
+          "tools": ["Write", "Edit"],
+          "validation": "npm test -- --testNamePattern={testName}"
+        },
+        {
+          "name": "implement-minimal-code", 
+          "description": "Write minimal code to make test pass",
+          "tools": ["Write", "Edit"],
+          "validation": "npm test -- --testNamePattern={testName}"
+        },
+        {
+          "name": "refactor-code",
+          "description": "Refactor while keeping tests green",
+          "tools": ["Edit", "Bash"],
+          "validation": "npm test"
+        }
+      ]
+    }
+  },
+  "hooks": {
+    "pre-implementation": [
+      {
+        "name": "check-test-exists",
+        "command": "test -f {testFile}",
+        "description": "Ensure test file exists before implementation"
+      }
+    ],
+    "post-edit": [
+      {
+        "name": "run-affected-tests",
+        "command": "npm test -- --testPathPattern={file}",
+        "description": "Run tests for edited files"
+      },
+      {
+        "name": "check-coverage",
+        "command": "npm run test:coverage -- {file}",
+        "description": "Verify test coverage"
+      }
+    ]
+  },
+  "testing": {
+    "framework": "jest",
+    "coverage_threshold": 90,
+    "watch_mode": true,
+    "auto_run": true
+  },
+  "conventions": {
+    "test_pattern": "**/*.test.{js,ts}",
+    "test_location": "alongside", 
+    "naming": "kebab-case"
+  }
+}

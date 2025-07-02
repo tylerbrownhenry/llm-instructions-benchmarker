@@ -1,33 +1,27 @@
 {
   "scenarios": [
     {
-      "id": "no-tdd",
-      "name": "No TDD Instructions",
-      "claudeFile": "CLAUDE_NO_TDD.md",
-      "description": "Standard instructions without TDD requirements"
+      "id": "collaborative-agents",
+      "name": "Collaborative Agent Teams",
+      "claudeFolder": "collaborative-agents-examples",
+      "description": "Synchronized agent teams working together in real-time"
     },
     {
-      "id": "tdd-strict",
-      "name": "Strict TDD",
-      "claudeFile": "CLAUDE_TDD.md",
-      "description": "Enforces test-driven development"
+      "id": "agent-swarm-examples",
+      "name": "Agent Swarm Examples",
+      "claudeFolder": "agent-swarm-examples",
+      "description": "Swarming agents"
     },
-    {
-      "id": "minimal",
-      "name": "Minimal Instructions",
-      "claudeFile": "CLAUDE_EMPTY.md",
-      "description": "Minimal or empty instructions"
-    },
-    {
-      "id": "strict-standards",
-      "name": "Strict Code Standards",
-      "claudeFile": "CLAUDE_STRICT.md",
-      "description": "Enforces strict coding standards and practices"
+   {
+      "id": "digital-ecosystem",
+      "name": "Digital Ecosystem",
+      "claudeFolder": "digital-ecosystem",
+      "description": "From single cells to evolved beings"
     }
   ],
   "settings": {
-    "parallelExecution": false,
-    "timeoutMinutes": 30,
+    "parallelExecution": true,
+    "timeoutMinutes": 5,
     "cleanupAfterRun": false
   }
 }

@@ -1,0 +1,622 @@
+{
+  "project": {
+    "name": "react-native-testing-agents",
+    "type": "intelligent-mobile-testing-system"
+  },
+
+  "testingInfrastructure": {
+    "architecture": "multi-agent-test-intelligence",
+    "appiumIntegration": "real-time-monitoring",
+    "reactNativeSupport": "deep-component-analysis",
+    "learningSystem": "adaptive-test-evolution"
+  },
+
+  "appiumConfiguration": {
+    "server": {
+      "host": "localhost",
+      "port": 4723,
+      "logLevel": "debug",
+      "realTimeMonitoring": true
+    },
+    "capabilities": {
+      "ios": {
+        "platformName": "iOS",
+        "platformVersion": "16.0",
+        "deviceName": "iPhone 14 Pro",
+        "app": "./ios/build/Build/Products/Debug-iphonesimulator/YourApp.app",
+        "automationName": "XCUITest",
+        "newCommandTimeout": 300
+      },
+      "android": {
+        "platformName": "Android",
+        "platformVersion": "13.0",
+        "deviceName": "Pixel_7_Pro_API_33",
+        "app": "./android/app/build/outputs/apk/debug/app-debug.apk",
+        "automationName": "UiAutomator2",
+        "newCommandTimeout": 300
+      }
+    },
+    "eventMonitoring": {
+      "commandEvents": true,
+      "sessionEvents": true,
+      "elementEvents": true,
+      "errorEvents": true,
+      "performanceEvents": true
+    }
+  },
+
+  "testingAgents": [
+    {
+      "name": "appium-event-monitor",
+      "description": "Monitors all Appium events and builds real-time understanding of app state",
+      "capabilities": [
+        "real-time-event-monitoring",
+        "session-state-tracking",
+        "command-performance-analysis",
+        "error-pattern-detection",
+        "element-discovery-tracking"
+      ],
+      "monitoring": {
+        "events": ["command", "session", "element", "error", "performance"],
+        "realTime": true,
+        "historicalAnalysis": true,
+        "patternRecognition": true
+      },
+      "intelligence": {
+        "learningEnabled": true,
+        "contextAwareness": "high",
+        "predictiveAnalysis": true
+      }
+    },
+    {
+      "name": "selector-intelligence",
+      "description": "Intelligently discovers and optimizes element selectors for React Native components",
+      "capabilities": [
+        "component-hierarchy-analysis",
+        "optimal-selector-discovery",
+        "react-native-bridge-understanding",
+        "accessibility-optimization",
+        "cross-platform-compatibility"
+      ],
+      "selectorStrategies": [
+        {
+          "name": "accessibility-id",
+          "priority": 0.9,
+          "stability": 0.95,
+          "platforms": ["ios", "android"]
+        },
+        {
+          "name": "xpath-optimized",
+          "priority": 0.6,
+          "stability": 0.7,
+          "platforms": ["ios", "android"]
+        },
+        {
+          "name": "predicate-string",
+          "priority": 0.8,
+          "stability": 0.8,
+          "platforms": ["ios"]
+        },
+        {
+          "name": "uiautomator",
+          "priority": 0.8,
+          "stability": 0.8,
+          "platforms": ["android"]
+        },
+        {
+          "name": "react-native-testid",
+          "priority": 0.95,
+          "stability": 0.9,
+          "platforms": ["ios", "android"]
+        }
+      ],
+      "optimization": {
+        "performanceWeight": 0.3,
+        "stabilityWeight": 0.5,
+        "readabilityWeight": 0.2
+      }
+    },
+    {
+      "name": "test-healer",
+      "description": "Automatically fixes broken tests by analyzing failures and applying intelligent repairs",
+      "capabilities": [
+        "failure-root-cause-analysis",
+        "intelligent-test-repair",
+        "selector-migration",
+        "timing-optimization",
+        "flaky-test-stabilization"
+      ],
+      "healingStrategies": [
+        {
+          "name": "stale-element-recovery",
+          "description": "Handles StaleElementReferenceException by re-finding elements",
+          "successRate": 0.85,
+          "applicability": ["all-platforms"]
+        },
+        {
+          "name": "timing-adjustment",
+          "description": "Adds intelligent waits for async operations",
+          "successRate": 0.75,
+          "applicability": ["all-platforms"]
+        },
+        {
+          "name": "selector-fallback",
+          "description": "Falls back to alternative selectors when primary fails",
+          "successRate": 0.9,
+          "applicability": ["all-platforms"]
+        },
+        {
+          "name": "component-state-sync",
+          "description": "Waits for React Native bridge synchronization",
+          "successRate": 0.8,
+          "applicability": ["react-native"]
+        }
+      ],
+      "learning": {
+        "failurePatternRecognition": true,
+        "successfulRepairMemory": true,
+        "adaptiveStrategy": true
+      }
+    },
+    {
+      "name": "performance-analyst",
+      "description": "Analyzes test performance and optimizes execution speed",
+      "capabilities": [
+        "command-latency-analysis",
+        "bottleneck-identification",
+        "parallel-execution-optimization",
+        "resource-usage-monitoring",
+        "test-suite-optimization"
+      ],
+      "metrics": {
+        "commandExecutionTime": true,
+        "elementFindTime": true,
+        "networkLatency": true,
+        "appStartupTime": true,
+        "memoryUsage": true,
+        "cpuUsage": true
+      },
+      "optimization": {
+        "parallelization": true,
+        "caching": true,
+        "batchOperations": true,
+        "smartWaiting": true
+      }
+    },
+    {
+      "name": "component-mapper",
+      "description": "Maps React Native components to native elements and maintains component hierarchy",
+      "capabilities": [
+        "react-native-component-discovery",
+        "native-element-mapping",
+        "component-hierarchy-tracking",
+        "state-change-monitoring",
+        "bridge-communication-analysis"
+      ],
+      "mapping": {
+        "componentTypes": {
+          "View": ["android.view.ViewGroup", "XCUIElementTypeOther"],
+          "Text": ["android.widget.TextView", "XCUIElementTypeStaticText"],
+          "TextInput": ["android.widget.EditText", "XCUIElementTypeTextField"],
+          "Button": ["android.widget.Button", "XCUIElementTypeButton"],
+          "TouchableOpacity": ["android.view.ViewGroup", "XCUIElementTypeButton"],
+          "ScrollView": ["android.widget.ScrollView", "XCUIElementTypeScrollView"],
+          "FlatList": ["androidx.recyclerview.widget.RecyclerView", "XCUIElementTypeTable"],
+          "Image": ["android.widget.ImageView", "XCUIElementTypeImage"]
+        },
+        "realTimeUpdates": true,
+        "hierarchyVersioning": true
+      }
+    },
+    {
+      "name": "test-generator",
+      "description": "Automatically generates new tests based on user interactions and app exploration",
+      "capabilities": [
+        "exploratory-testing",
+        "user-journey-recording",
+        "edge-case-generation",
+        "regression-test-creation",
+        "accessibility-test-generation"
+      ],
+      "generation": {
+        "explorationStrategies": [
+          "depth-first-navigation",
+          "breadth-first-coverage",
+          "random-interaction",
+          "state-based-exploration"
+        ],
+        "testTypes": [
+          "smoke-tests",
+          "regression-tests",
+          "accessibility-tests",
+          "performance-tests",
+          "edge-case-tests"
+        ],
+        "codeGeneration": {
+          "frameworks": ["jest", "detox", "webdriverio", "appium"],
+          "languages": ["javascript", "typescript"],
+          "patterns": ["page-object", "screenplay", "behavior-driven"]
+        }
+      }
+    },
+    {
+      "name": "accessibility-auditor",
+      "description": "Ensures tests cover accessibility requirements and suggests improvements",
+      "capabilities": [
+        "accessibility-compliance-checking",
+        "screen-reader-simulation",
+        "contrast-analysis",
+        "focus-management-testing",
+        "accessibility-test-generation"
+      ],
+      "standards": {
+        "wcag": "2.1-AA",
+        "section508": true,
+        "platformSpecific": {
+          "ios": "voiceover-guidelines",
+          "android": "talkback-guidelines"
+        }
+      },
+      "checks": [
+        "accessible-names",
+        "focusable-elements",
+        "contrast-ratios",
+        "touch-target-sizes",
+        "semantic-markup",
+        "keyboard-navigation"
+      ]
+    },
+    {
+      "name": "test-coordinator",
+      "description": "Orchestrates all testing agents and manages test execution strategy",
+      "capabilities": [
+        "agent-coordination",
+        "test-prioritization",
+        "resource-allocation",
+        "execution-scheduling",
+        "result-aggregation"
+      ],
+      "coordination": {
+        "executionModes": [
+          "parallel-platform-testing",
+          "sequential-test-healing",
+          "exploratory-discovery",
+          "performance-optimization"
+        ],
+        "prioritization": {
+          "criticalPath": 0.4,
+          "recentChanges": 0.3,
+          "historicalFailures": 0.2,
+          "businessImpact": 0.1
+        }
+      }
+    }
+  ],
+
+  "reactNativeSpecific": {
+    "bridgeCommunication": {
+      "monitoring": true,
+      "eventInterception": true,
+      "asyncOperationTracking": true,
+      "stateChangeDetection": true
+    },
+    "componentIntelligence": {
+      "propAnalysis": true,
+      "stateTracking": true,
+      "lifecycleMonitoring": true,
+      "reduxIntegration": true,
+      "navigationTracking": true
+    },
+    "metro": {
+      "bundleAnalysis": true,
+      "hotReloadMonitoring": true,
+      "sourceMapUtilization": true
+    },
+    "debugging": {
+      "flipperIntegration": true,
+      "reactDevTools": true,
+      "chromeDevTools": true
+    }
+  },
+
+  "testHealingStrategies": {
+    "selectorHealing": {
+      "enabled": true,
+      "strategies": [
+        {
+          "name": "fallback-chain",
+          "description": "Try alternative selectors in order of preference",
+          "implementation": "try primary → accessibility-id → testID → xpath → class-chain"
+        },
+        {
+          "name": "dynamic-xpath",
+          "description": "Generate context-aware xpath expressions",
+          "implementation": "analyze element context and generate robust xpath"
+        },
+        {
+          "name": "sibling-navigation",
+          "description": "Navigate via stable sibling elements",
+          "implementation": "find stable parent/sibling → navigate to target"
+        }
+      ]
+    },
+    "timingHealing": {
+      "enabled": true,
+      "strategies": [
+        {
+          "name": "smart-waits",
+          "description": "Intelligent waiting based on app state",
+          "implementation": "monitor bridge events + loading states + network"
+        },
+        {
+          "name": "progressive-timeout",
+          "description": "Gradually increase timeouts for flaky operations",
+          "implementation": "start low → exponential backoff → learning optimal timing"
+        },
+        {
+          "name": "condition-waiting",
+          "description": "Wait for specific conditions rather than fixed time",
+          "implementation": "element-present + element-clickable + text-changed + etc"
+        }
+      ]
+    },
+    "networkHealing": {
+      "enabled": true,
+      "strategies": [
+        {
+          "name": "network-aware-testing",
+          "description": "Adapt tests based on network conditions",
+          "implementation": "monitor requests → adjust timeouts → retry on failure"
+        },
+        {
+          "name": "mock-fallback",
+          "description": "Use mocks when network is unavailable",
+          "implementation": "detect network issues → enable mock mode → continue testing"
+        }
+      ]
+    }
+  },
+
+  "intelligentDiscovery": {
+    "selectorOptimization": {
+      "scoringAlgorithm": {
+        "uniqueness": 0.4,
+        "stability": 0.3,
+        "performance": 0.2,
+        "readability": 0.1
+      },
+      "machineLoearning": {
+        "enabled": true,
+        "algorithm": "random-forest",
+        "features": [
+          "element-depth",
+          "sibling-count",
+          "attribute-uniqueness",
+          "text-content-stability",
+          "historical-success-rate"
+        ],
+        "retraining": "weekly"
+      }
+    },
+    "patternRecognition": {
+      "enabled": true,
+      "patterns": [
+        "modal-dialogs",
+        "list-items",
+        "form-fields",
+        "navigation-elements",
+        "loading-states",
+        "error-messages"
+      ],
+      "learning": {
+        "userFeedback": true,
+        "successRateAnalysis": true,
+        "contextualLearning": true
+      }
+    }
+  },
+
+  "realTimeMonitoring": {
+    "appiumEvents": {
+      "commandStarted": true,
+      "commandCompleted": true,
+      "elementFound": true,
+      "elementNotFound": true,
+      "sessionCreated": true,
+      "sessionDeleted": true,
+      "errorOccurred": true,
+      "performanceMetrics": true
+    },
+    "reactNativeEvents": {
+      "bridgeEvents": true,
+      "componentLifecycle": true,
+      "stateChanges": true,
+      "navigationChanges": true,
+      "networkRequests": true,
+      "errorBoundaries": true
+    },
+    "processing": {
+      "realTimeAnalysis": true,
+      "eventCorrelation": true,
+      "anomalyDetection": true,
+      "predictiveInsights": true
+    }
+  },
+
+  "agents": [
+    {
+      "name": "test-orchestrator",
+      "description": "Master agent that coordinates all testing activities and manages the overall testing strategy",
+      "instructions": "Coordinate all testing agents, monitor Appium events in real-time, manage test execution flow, and optimize overall testing strategy. Handle test healing, selector optimization, and performance analysis.",
+      "tools": ["Read", "Write", "Edit", "Bash"],
+      "role": "orchestration"
+    },
+    {
+      "name": "appium-monitor",
+      "description": "Real-time Appium event monitoring and analysis agent",
+      "instructions": "Monitor all Appium server events, analyze command patterns, detect failures, and provide insights for test optimization. Track session state and element interactions.",
+      "tools": ["Read", "Write", "Bash"],
+      "role": "monitoring"
+    },
+    {
+      "name": "selector-optimizer",
+      "description": "Intelligent selector discovery and optimization agent",
+      "instructions": "Analyze React Native component structure, discover optimal selectors, maintain selector stability scores, and suggest improvements. Handle cross-platform selector compatibility.",
+      "tools": ["Read", "Write", "Edit"],
+      "role": "optimization"
+    }
+  ],
+
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": "Edit|Write",
+      "command": "node .claude/scripts/test-orchestrator.js monitor --trigger=\"test_file_change\" --file=\"$CLAUDE_TOOL_INPUT_FILE_PATH\""
+    },
+    {
+      "event": "PreToolUse",
+      "matcher": "Bash",
+      "command": "node .claude/scripts/test-orchestrator.js observe --trigger=\"command_execution\" --command=\"$CLAUDE_TOOL_INPUT_COMMAND\""
+    },
+    {
+      "event": "Stop",
+      "matcher": "*",
+      "command": "node .claude/scripts/test-orchestrator.js finalize --action=\"session_end\""
+    }
+  ],
+
+  "testFrameworkIntegration": {
+    "jest": {
+      "configPath": "jest.config.js",
+      "setupFiles": ["./jest.setup.js"],
+      "testEnvironment": "node",
+      "testTimeout": 60000
+    },
+    "detox": {
+      "configPath": ".detoxrc.json", 
+      "enabled": true,
+      "integration": "parallel-execution"
+    },
+    "webdriverio": {
+      "configPath": "wdio.conf.js",
+      "enabled": true,
+      "services": ["appium"]
+    }
+  },
+
+  "artificialIntelligence": {
+    "machineLearning": {
+      "enabled": true,
+      "models": [
+        {
+          "name": "selector-stability-predictor",
+          "type": "random-forest",
+          "purpose": "predict selector longevity",
+          "features": ["element-depth", "attribute-count", "sibling-position", "historical-changes"],
+          "accuracy": 0.87
+        },
+        {
+          "name": "test-failure-classifier",
+          "type": "neural-network",
+          "purpose": "classify failure types for healing",
+          "features": ["error-message", "stack-trace", "timing", "element-state"],
+          "accuracy": 0.92
+        },
+        {
+          "name": "performance-optimizer",
+          "type": "reinforcement-learning",
+          "purpose": "optimize test execution performance",
+          "environment": "appium-command-sequence",
+          "reward": "execution-time-reduction"
+        }
+      ],
+      "training": {
+        "continuous": true,
+        "frequency": "daily",
+        "dataCollection": "automated",
+        "validation": "cross-platform"
+      }
+    },
+    "naturalLanguageProcessing": {
+      "enabled": true,
+      "capabilities": [
+        "error-message-analysis",
+        "test-description-generation",
+        "documentation-generation",
+        "user-story-to-test-conversion"
+      ]
+    }
+  },
+
+  "crossPlatformIntelligence": {
+    "unifiedTesting": {
+      "enabled": true,
+      "sharedTestLogic": true,
+      "platformSpecificAdaptations": true,
+      "crossPlatformSelectorMapping": true
+    },
+    "platformDifferences": {
+      "iOS": {
+        "automationName": "XCUITest",
+        "selectorTypes": ["accessibility-id", "predicate-string", "class-chain", "xpath"],
+        "specificFeatures": ["3d-touch", "face-id", "siri-integration"]
+      },
+      "Android": {
+        "automationName": "UiAutomator2",
+        "selectorTypes": ["accessibility-id", "uiautomator", "xpath", "id"],
+        "specificFeatures": ["back-button", "hardware-menu", "app-switching"]
+      }
+    }
+  },
+
+  "continuousImprovement": {
+    "learningLoop": {
+      "enabled": true,
+      "phases": [
+        "execution-monitoring",
+        "failure-analysis", 
+        "pattern-recognition",
+        "strategy-adaptation",
+        "validation-testing"
+      ],
+      "cycle": "continuous"
+    },
+    "feedback": {
+      "userFeedback": true,
+      "automaticMetrics": true,
+      "communityLearning": false,
+      "expertKnowledge": true
+    }
+  },
+
+  "monitoring": {
+    "realTimeMetrics": {
+      "testExecutionSpeed": true,
+      "healingSuccessRate": true,
+      "selectorStability": true,
+      "appiumPerformance": true,
+      "agentCoordination": true
+    },
+    "dashboards": {
+      "testHealth": {
+        "enabled": true,
+        "updateFrequency": "real-time",
+        "widgets": ["success-rate", "healing-actions", "performance-trends"]
+      },
+      "selectorIntelligence": {
+        "enabled": true,
+        "updateFrequency": "real-time", 
+        "widgets": ["selector-scores", "discovery-rate", "optimization-suggestions"]
+      }
+    },
+    "alerting": {
+      "enabled": true,
+      "channels": ["console", "file", "webhook"],
+      "conditions": [
+        "healing-failure-rate > 0.3",
+        "test-execution-time > baseline * 2",
+        "appium-connection-failures > 5"
+      ]
+    }
+  }
+}

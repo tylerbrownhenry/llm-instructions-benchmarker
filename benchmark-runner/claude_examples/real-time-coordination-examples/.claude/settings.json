@@ -1,0 +1,299 @@
+{
+  "project": {
+    "name": "real-time-agent-coordination",
+    "type": "live-collaborative-system"
+  },
+
+  "coordinationSystem": {
+    "architecture": "event-driven-mesh",
+    "communicationMode": "real-time",
+    "stateManagement": "distributed-consensus",
+    "syncMechanism": "lamport-timestamps"
+  },
+
+  "agentMesh": [
+    {
+      "name": "frontend-observer",
+      "type": "reactive-agent",
+      "description": "Monitors frontend state changes and user interactions in real-time",
+      "expertise": ["react-state", "user-interactions", "component-lifecycle"],
+      "realtimeCapabilities": {
+        "stateTracking": true,
+        "eventStreaming": true,
+        "liveUpdates": true
+      },
+      "communicatesWithh": ["backend-monitor", "ui-coordinator", "performance-tracker"],
+      "sharedChannels": ["state-changes", "user-events", "performance-metrics"]
+    },
+    {
+      "name": "backend-monitor",
+      "type": "reactive-agent", 
+      "description": "Tracks backend services, API calls, and database operations in real-time",
+      "expertise": ["api-monitoring", "database-queries", "service-health"],
+      "realtimeCapabilities": {
+        "apiTracking": true,
+        "healthMonitoring": true,
+        "performanceMetrics": true
+      },
+      "communicatesWith": ["frontend-observer", "database-watcher", "security-sentinel"],
+      "sharedChannels": ["api-events", "db-operations", "health-status"]
+    },
+    {
+      "name": "database-watcher",
+      "type": "reactive-agent",
+      "description": "Observes database transactions, schema changes, and data flow",
+      "expertise": ["sql-analysis", "transaction-monitoring", "data-integrity"],
+      "realtimeCapabilities": {
+        "transactionTracking": true,
+        "schemaMonitoring": true,
+        "dataValidation": true
+      },
+      "communicatesWith": ["backend-monitor", "data-analyst", "integrity-guardian"],
+      "sharedChannels": ["db-transactions", "schema-events", "data-changes"]
+    },
+    {
+      "name": "security-sentinel",
+      "type": "proactive-agent",
+      "description": "Real-time security monitoring and threat detection",
+      "expertise": ["threat-detection", "vulnerability-scanning", "access-control"],
+      "realtimeCapabilities": {
+        "threatDetection": true,
+        "anomalyDetection": true,
+        "accessMonitoring": true
+      },
+      "communicatesWith": ["backend-monitor", "access-controller", "incident-responder"],
+      "sharedChannels": ["security-events", "threat-alerts", "access-logs"]
+    },
+    {
+      "name": "performance-tracker",
+      "type": "analytical-agent",
+      "description": "Continuously analyzes performance metrics across all system components",
+      "expertise": ["performance-analysis", "bottleneck-detection", "optimization"],
+      "realtimeCapabilities": {
+        "metricsCollection": true,
+        "trendAnalysis": true,
+        "alerting": true
+      },
+      "communicatesWith": ["frontend-observer", "backend-monitor", "resource-optimizer"],
+      "sharedChannels": ["performance-data", "optimization-suggestions", "alerts"]
+    },
+    {
+      "name": "ui-coordinator",
+      "type": "orchestrator-agent",
+      "description": "Coordinates UI updates and user experience optimization",
+      "expertise": ["ui-coordination", "user-experience", "interaction-design"],
+      "realtimeCapabilities": {
+        "uiOrchestration": true,
+        "experienceOptimization": true,
+        "feedbackLoop": true
+      },
+      "communicatesWith": ["frontend-observer", "user-experience-analyst", "accessibility-monitor"],
+      "sharedChannels": ["ui-events", "ux-metrics", "interaction-data"]
+    },
+    {
+      "name": "data-analyst",
+      "type": "analytical-agent",
+      "description": "Real-time data analysis and pattern recognition",
+      "expertise": ["data-analysis", "pattern-recognition", "predictive-modeling"],
+      "realtimeCapabilities": {
+        "streamProcessing": true,
+        "patternDetection": true,
+        "predictionGeneration": true
+      },
+      "communicatesWith": ["database-watcher", "ml-coordinator", "business-intelligence"],
+      "sharedChannels": ["data-streams", "analysis-results", "predictions"]
+    },
+    {
+      "name": "resource-optimizer",
+      "type": "adaptive-agent",
+      "description": "Dynamic resource allocation and system optimization",
+      "expertise": ["resource-management", "load-balancing", "auto-scaling"],
+      "realtimeCapabilities": {
+        "resourceMonitoring": true,
+        "dynamicAllocation": true,
+        "autoScaling": true
+      },
+      "communicatesWith": ["performance-tracker", "infrastructure-manager", "cost-optimizer"],
+      "sharedChannels": ["resource-metrics", "scaling-events", "optimization-actions"]
+    }
+  ],
+
+  "communicationInfrastructure": {
+    "eventBus": {
+      "type": "distributed-event-mesh",
+      "persistence": "event-sourcing",
+      "ordering": "causal-consistency",
+      "delivery": "at-least-once"
+    },
+    "sharedMemory": {
+      "type": "distributed-cache",
+      "consistency": "eventual-consistency",
+      "replication": "multi-master",
+      "conflictResolution": "vector-clocks"
+    },
+    "messagePassing": {
+      "protocol": "websocket",
+      "serialization": "messagepack",
+      "compression": "lz4",
+      "encryption": "end-to-end"
+    },
+    "stateSync": {
+      "mechanism": "operational-transform",
+      "mergingStrategy": "three-way-merge",
+      "conflictResolution": "expertise-weighted"
+    }
+  },
+
+  "realtimeWorkflows": [
+    {
+      "name": "live-code-analysis",
+      "description": "Real-time analysis of code as it's being written",
+      "triggerEvent": "keystroke",
+      "participants": ["frontend-observer", "security-sentinel", "performance-tracker"],
+      "coordination": {
+        "mode": "streaming",
+        "latency": "sub-100ms",
+        "parallelism": "full"
+      },
+      "phases": [
+        {
+          "name": "keystroke-capture",
+          "agent": "frontend-observer",
+          "duration": "5ms",
+          "outputs": ["code-delta", "cursor-position", "context"]
+        },
+        {
+          "name": "security-scan",
+          "agent": "security-sentinel", 
+          "duration": "50ms",
+          "inputs": ["code-delta"],
+          "outputs": ["security-assessment", "vulnerability-flags"]
+        },
+        {
+          "name": "performance-analysis",
+          "agent": "performance-tracker",
+          "duration": "30ms", 
+          "inputs": ["code-delta", "context"],
+          "outputs": ["performance-impact", "optimization-hints"]
+        }
+      ]
+    },
+    {
+      "name": "collaborative-debugging",
+      "description": "Multiple agents debugging in real-time coordination",
+      "triggerEvent": "error-detected",
+      "participants": ["backend-monitor", "database-watcher", "data-analyst"],
+      "coordination": {
+        "mode": "synchronized-investigation",
+        "information-sharing": "immediate",
+        "decision-making": "consensus-based"
+      },
+      "phases": [
+        {
+          "name": "error-isolation",
+          "agents": ["backend-monitor", "database-watcher"],
+          "mode": "parallel",
+          "coordination": "shared-timeline"
+        },
+        {
+          "name": "pattern-analysis",
+          "agent": "data-analyst",
+          "inputs": ["error-context", "system-state"],
+          "mode": "streaming-analysis"
+        },
+        {
+          "name": "solution-synthesis",
+          "agents": ["all"],
+          "mode": "collaborative-reasoning",
+          "consensus": "required"
+        }
+      ]
+    },
+    {
+      "name": "dynamic-optimization",
+      "description": "Continuous system optimization based on real-time metrics",
+      "triggerEvent": "performance-threshold",
+      "participants": ["performance-tracker", "resource-optimizer", "ui-coordinator"],
+      "coordination": {
+        "mode": "feedback-loop",
+        "responsiveness": "adaptive",
+        "learning": "reinforcement"
+      }
+    }
+  ],
+
+  "distributedState": {
+    "globalState": {
+      "systemMetrics": {
+        "performance": {},
+        "security": {},
+        "resources": {},
+        "user-experience": {}
+      },
+      "agentStates": {},
+      "eventHistory": {},
+      "consensusLog": {}
+    },
+    "partitioning": {
+      "strategy": "domain-based",
+      "replication": 3,
+      "consistency": "causal"
+    },
+    "synchronization": {
+      "protocol": "gossip",
+      "interval": "100ms",
+      "conflictResolution": "last-writer-wins-with-vector-clocks"
+    }
+  },
+
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": "Edit|Write",
+      "command": "node .claude/scripts/realtime-coordinator.js stream --event=\"code_change\" --file=\"$CLAUDE_TOOL_INPUT_FILE_PATH\""
+    },
+    {
+      "event": "PreToolUse",
+      "matcher": "Bash",
+      "command": "node .claude/scripts/realtime-coordinator.js observe --event=\"command_start\" --command=\"$CLAUDE_TOOL_INPUT_COMMAND\""
+    },
+    {
+      "event": "Stop",
+      "matcher": "*",
+      "command": "node .claude/scripts/realtime-coordinator.js sync --event=\"session_end\""
+    }
+  ],
+
+  "intelligence": {
+    "collectiveDecisionMaking": {
+      "algorithm": "raft-consensus",
+      "quorum": 0.51,
+      "timeout": "1000ms"
+    },
+    "learningMechanisms": {
+      "reinforcement": true,
+      "imitation": true,
+      "social": true,
+      "transfer": true
+    },
+    "adaptiveBehavior": {
+      "environmentalAdaptation": true,
+      "performanceOptimization": true,
+      "emergentStrategies": true
+    }
+  },
+
+  "monitoring": {
+    "realTimeMetrics": {
+      "communicationLatency": true,
+      "consensusTime": true,
+      "systemThroughput": true,
+      "coordinationEfficiency": true
+    },
+    "dashboard": {
+      "enabled": true,
+      "updateFrequency": "250ms",
+      "visualizations": ["network-graph", "timeline", "metrics-dashboard"]
+    }
+  }
+}

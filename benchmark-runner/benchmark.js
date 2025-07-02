@@ -125,7 +125,15 @@ class BenchmarkOrchestrator {
     config.scenarios.forEach((scenario, index) => {
       console.log(`${index + 1}. **${scenario.name}** (${scenario.id})`);
       console.log(`   ${scenario.description}`);
-      console.log(`   Config: ${scenario.claudeFile}`);
+      
+      if (scenario.claudeFile) {
+        console.log(`   Config: ${scenario.claudeFile}`);
+      } else if (scenario.claudeFolder) {
+        console.log(`   Config Folder: ${scenario.claudeFolder}`);
+      } else {
+        console.log(`   Config: Not specified`);
+      }
+      
       console.log('');
     });
     

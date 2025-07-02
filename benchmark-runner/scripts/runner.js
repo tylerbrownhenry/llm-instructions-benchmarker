@@ -23,8 +23,8 @@ class ClaudeSessionRunner {
     // Load configuration
     this.config = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
     
-    // Load prompt
-    this.prompt = fs.readFileSync(PROMPT_PATH, 'utf8');
+    // Load default prompt
+    this.defaultPrompt = fs.readFileSync(PROMPT_PATH, 'utf8');
     
     // Ensure results directory exists
     await fs.ensureDir(RESULTS_PATH);
@@ -38,7 +38,7 @@ class ClaudeSessionRunner {
     console.log(`📁 Run directory: ${this.runDir}`);
   }
 
-  async spawnClaudeSession(projectPath, scenarioId) {
+  async spawnClaudeSession(projectPath, scenarioId, customPrompt = null) {
     return new Promise(async (resolve, reject) => {
       console.log(`🚀 Starting Claude Code session for ${scenarioId}...`);
       
@@ -83,8 +83,9 @@ class ClaudeSessionRunner {
       let errorBuffer = '';
       let sessionCompleted = false;
       
-      // Send prompt via stdin
-      claudeProcess.stdin.write(this.prompt);
+      // Send prompt via stdin (use custom prompt if provided)
+      const promptToUse = customPrompt || this.defaultPrompt;
+      claudeProcess.stdin.write(promptToUse);
       claudeProcess.stdin.end();
       
       // Handle stdout
@@ -207,7 +208,18 @@ class ClaudeSessionRunner {
     }
     
     try {
-      const result = await this.spawnClaudeSession(projectPath, scenarioId);
+      // Check if scenario has a custom prompt file
+      let customPrompt = null;
+      if (scenario.claudeFolder) {
+        // Look for a prompt.md file in the scenario directory
+        const promptPath = path.join(projectPath, 'prompt.md');
+        if (fs.existsSync(promptPath)) {
+          customPrompt = fs.readFileSync(promptPath, 'utf8');
+          console.log(`📝 Using custom prompt for ${scenarioId}`);
+        }
+      }
+      
+      const result = await this.spawnClaudeSession(projectPath, scenarioId, customPrompt);
       this.results.push(result);
       return result;
     } catch (error) {

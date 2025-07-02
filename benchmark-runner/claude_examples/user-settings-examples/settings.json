@@ -1,0 +1,63 @@
+{
+  "permissions": {
+    "allowTools": ["Read", "Write", "Edit", "Bash", "Glob", "Grep"],
+    "denyTools": ["WebFetch"],
+    "requireApproval": ["Bash:rm", "Bash:sudo", "Bash:curl"]
+  },
+  
+  "environment": {
+    "NODE_ENV": "development",
+    "LOG_LEVEL": "debug",
+    "CLAUDE_WORKSPACE": "/Users/$USER/Development",
+    "DEFAULT_EDITOR": "code"
+  },
+  
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": "Edit|Write",
+      "command": "npx prettier --write \"$CLAUDE_TOOL_INPUT_FILE_PATH\" 2>/dev/null || true"
+    },
+    {
+      "event": "PreToolUse", 
+      "matcher": "Bash",
+      "command": "echo \"$(date): User $USER running: $CLAUDE_TOOL_INPUT_COMMAND\" >> ~/.claude/global-activity.log"
+    },
+    {
+      "event": "Stop",
+      "matcher": "*",
+      "command": "echo \"$(date): Session ended for $USER\" >> ~/.claude/global-activity.log"
+    }
+  ],
+  
+  "agents": [
+    {
+      "name": "personal-assistant",
+      "description": "General development assistant for personal projects",
+      "instructions": "Help with personal coding projects. Prefer modern JavaScript/TypeScript. Always explain changes.",
+      "defaultActive": true
+    },
+    {
+      "name": "learning-mentor", 
+      "description": "Educational coding assistant",
+      "instructions": "Focus on teaching concepts and best practices. Provide detailed explanations and examples.",
+      "defaultActive": false
+    }
+  ],
+  
+  "preferences": {
+    "includeCoAuthoredBy": true,
+    "cleanupPeriodDays": 30,
+    "verbose": false,
+    "theme": "dark",
+    "notifications": {
+      "desktop": true,
+      "sound": false
+    }
+  },
+  
+  "apiKeyHelper": {
+    "command": "security find-generic-password -s 'claude-api-key' -w",
+    "timeout": 5000
+  }
+}

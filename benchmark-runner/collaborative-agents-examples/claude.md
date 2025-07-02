@@ -1,0 +1,528 @@
+# Collaborative Agent Teams
+
+This example demonstrates synchronized agent teams that work together collaboratively in real-time, rather than just spawning separate asynchronous processes.
+
+## Synchronized Teamwork Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                  Team Coordinator                              │
+├─────────────────────────────────────────────────────────────────┤
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐  │
+│  │ Code Review     │  │ Feature Dev     │  │ Debug Team      │  │
+│  │ Team            │  │ Team            │  │                 │  │
+│  │                 │  │                 │  │                 │  │
+│  │ ┌─────────────┐ │  │ ┌─────────────┐ │  │ ┌─────────────┐ │  │
+│  │ │Syntax       │ │  │ │Requirements │ │  │ │Error        │ │  │
+│  │ │Reviewer     │ │  │ │Analyst      │ │  │ │Detective    │ │  │
+│  │ └─────────────┘ │  │ └─────────────┘ │  │ └─────────────┘ │  │
+│  │ ┌─────────────┐ │  │ ┌─────────────┐ │  │ ┌─────────────┐ │  │
+│  │ │Security ────┼─┼──┼▶│API Designer │ │  │ │Data         │ │  │
+│  │ │Reviewer     │ │  │ └─────────────┘ │  │ │Investigator │ │  │
+│  │ └─────────────┘ │  │ ┌─────────────┐ │  │ └─────────────┘ │  │
+│  │ ┌─────────────┐ │  │ │Frontend ────┼─┼──┼▶│Solution     │ │  │
+│  │ │Final        │ │  │ │Architect    │ │  │ │Architect    │ │  │
+│  │ │Synthesizer  │ │  │ └─────────────┘ │  │ └─────────────┘ │  │
+│  │ └─────────────┘ │  │                 │  │                 │  │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘  │
+│         ▲                       ▲                       ▲        │
+│         │                       │                       │        │
+│    Shared State            Shared State            Shared State  │
+│    & Consensus             & Coordination          & Analysis     │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+## Key Collaborative Features
+
+### Real-Time Synchronization
+- **Barrier Synchronization**: Agents wait for each other at defined sync points
+- **Shared Memory**: All agents access and update common state in real-time
+- **Event-Driven Coordination**: Agents respond to each other's progress immediately
+
+### Dependency-Based Execution
+- **Sequential Dependencies**: Some agents wait for others to complete before starting
+- **Parallel Collaboration**: Multiple agents work simultaneously when possible
+- **Cross-Agent Communication**: Agents share findings and build on each other's work
+
+## Collaborative Teams
+
+### Code Review Team
+**Synchronized Analysis**: Multiple reviewers analyze code simultaneously
+
+```json
+{
+  "name": "code-review-team",
+  "collaboration": "synchronous",
+  "members": [
+    {
+      "name": "syntax-reviewer",
+      "role": "syntax-analysis",
+      "waitFor": [],
+      "provides": ["syntax-report", "parse-errors"]
+    },
+    {
+      "name": "security-reviewer", 
+      "role": "security-analysis",
+      "waitFor": ["syntax-reviewer"],
+      "provides": ["security-report", "vulnerability-list"]
+    },
+    {
+      "name": "final-synthesizer",
+      "role": "synthesis", 
+      "waitFor": ["logic-reviewer", "security-reviewer", "style-reviewer"],
+      "provides": ["final-review", "actionable-recommendations"]
+    }
+  ]
+}
+```
+
+**Workflow Example**:
+```bash
+# User edits JavaScript file
+claude "Fix authentication bug in login.js"
+
+# Collaborative review process:
+# 1. Syntax-reviewer starts immediately
+# 2. Security-reviewer waits for syntax analysis, then starts
+# 3. Logic-reviewer and style-reviewer run in parallel after syntax
+# 4. Integration-reviewer waits for logic and security results
+# 5. Final-synthesizer waits for all others, then creates consensus
+```
+
+### Feature Development Team
+**End-to-End Collaborative Design**: Team designs complete features together
+
+```json
+{
+  "name": "feature-development-team",
+  "members": [
+    {
+      "name": "requirements-analyst",
+      "waitFor": [],
+      "provides": ["requirements-spec", "test-scenarios"]
+    },
+    {
+      "name": "api-designer",
+      "waitFor": ["requirements-analyst"],
+      "provides": ["api-specification", "data-models"]
+    },
+    {
+      "name": "frontend-architect",
+      "waitFor": ["requirements-analyst", "api-designer"],
+      "provides": ["component-architecture", "state-design"]
+    },
+    {
+      "name": "backend-architect",
+      "waitFor": ["requirements-analyst", "api-designer"], 
+      "provides": ["service-architecture", "database-design"]
+    }
+  ]
+}
+```
+
+### Debugging Team
+**Collaborative Problem Solving**: Team investigates issues together
+
+```json
+{
+  "name": "debugging-team",
+  "members": [
+    {
+      "name": "error-detective",
+      "waitFor": [],
+      "provides": ["error-catalog", "failure-points"]
+    },
+    {
+      "name": "data-investigator",
+      "waitFor": ["error-detective"],
+      "provides": ["data-report", "state-analysis"]
+    },
+    {
+      "name": "hypothesis-generator",
+      "waitFor": ["data-investigator", "flow-tracer"],
+      "provides": ["hypotheses", "probable-causes"]
+    }
+  ]
+}
+```
+
+## Synchronization Mechanisms
+
+### Barrier Synchronization
+```javascript
+async waitForDependencies() {
+  console.log(`Agent ${this.role} waiting for dependencies: ${Array.from(this.waitFor).join(', ')}`);
+  
+  return new Promise((resolve) => {
+    const checkDependencies = async () => {
+      const sharedState = await this.loadSharedState();
+      const completedAgents = Object.keys(sharedState.agentContributions || {});
+      
+      const dependenciesMet = Array.from(this.waitFor).every(dep => 
+        completedAgents.some(agent => agent.includes(dep))
+      );
+      
+      if (dependenciesMet) {
+        console.log(`Dependencies met for agent ${this.role}`);
+        resolve();
+      } else {
+        setTimeout(checkDependencies, 1000); // Check every second
+      }
+    };
+    
+    checkDependencies();
+  });
+}
+```
+
+### Shared State Management
+```javascript
+async shareFindings(findings) {
+  const sharedState = await this.loadSharedState();
+  
+  if (!sharedState.agentContributions) {
+    sharedState.agentContributions = {};
+  }
+  
+  sharedState.agentContributions[this.config.name] = findings;
+  await this.saveSharedState(sharedState);
+  
+  // Notify other agents
+  this.sendMessage('findings-shared', {
+    agentId: this.agentId,
+    role: this.role,
+    findings: findings
+  });
+}
+```
+
+### Consensus Building
+```javascript
+async participateInConsensus(findings) {
+  const consensusItems = this.extractConsensusItems(findings);
+  
+  if (consensusItems.length > 0) {
+    this.sendMessage('consensus-contribution', {
+      agentId: this.agentId,
+      role: this.role,
+      items: consensusItems,
+      expertise: this.expertise
+    });
+  }
+}
+
+evaluateConsensus(teamName) {
+  const team = this.activeTeams.get(teamName);
+  const consensus = team.sharedState.consensus;
+  
+  const contributions = Object.values(consensus.contributions);
+  const totalAgents = team.config.members.length;
+  
+  // Consensus reached when majority agrees
+  if (contributions.length >= Math.ceil(totalAgents * 0.6)) {
+    console.log(`Consensus reached for team ${teamName}`);
+    this.buildFinalConsensus(teamName, contributions);
+  }
+}
+```
+
+## Collaborative Workflows
+
+### Synchronized Code Review
+```javascript
+// Phase 1: Parallel Initial Analysis
+{
+  "name": "parallel-analysis",
+  "agents": ["syntax-reviewer", "security-reviewer", "style-reviewer"],
+  "mode": "parallel",
+  "syncPoint": "analysis-complete"
+}
+
+// Phase 2: Deep Analysis (waits for Phase 1)
+{
+  "name": "deep-analysis", 
+  "agents": ["logic-reviewer", "integration-reviewer"],
+  "mode": "parallel",
+  "dependsOn": ["analysis-complete"],
+  "syncPoint": "deep-analysis-complete"
+}
+
+// Phase 3: Synthesis (waits for Phase 2)
+{
+  "name": "synthesis",
+  "agents": ["final-synthesizer"],
+  "mode": "sequential",
+  "dependsOn": ["deep-analysis-complete"],
+  "syncPoint": "synthesis-complete"
+}
+```
+
+### Real-Time Collaboration Example
+```bash
+# User modifies authentication.js
+claude "Update JWT token validation"
+
+# Synchronized team collaboration:
+# T+0s:  Syntax-reviewer starts analyzing
+# T+2s:  Syntax analysis complete, shared to team
+# T+2s:  Security-reviewer starts (depends on syntax)
+# T+2s:  Style-reviewer starts (depends on syntax)  
+# T+2s:  Logic-reviewer starts (depends on syntax)
+# T+8s:  Security analysis finds JWT vulnerability
+# T+10s: Logic analysis finds complexity issue
+# T+12s: Integration-reviewer starts (depends on logic+security)
+# T+15s: All analyses complete, shared state updated
+# T+15s: Final-synthesizer starts consensus building
+# T+18s: Synthesis complete with prioritized recommendations
+```
+
+## Agent Specialization and Expertise
+
+### Syntax Reviewer
+```javascript
+async performSyntaxAnalysis() {
+  const code = await fs.readFile(filePath, 'utf8');
+  const syntaxIssues = [];
+  
+  // Check for outdated patterns
+  if (code.includes('var ')) {
+    syntaxIssues.push({ 
+      type: 'outdated-syntax', 
+      message: 'Use let/const instead of var' 
+    });
+  }
+  
+  // Check missing semicolons
+  const lines = code.split('\n');
+  lines.forEach((line, index) => {
+    if (line.trim() && !line.trim().endsWith(';') && 
+        !line.trim().endsWith('{') && !line.trim().endsWith('}')) {
+      syntaxIssues.push({ 
+        type: 'style', 
+        line: index + 1, 
+        message: 'Consider adding semicolon' 
+      });
+    }
+  });
+  
+  return {
+    agent: this.role,
+    analysis: 'syntax-complete',
+    issues: syntaxIssues,
+    metrics: { linesAnalyzed: lines.length }
+  };
+}
+```
+
+### Security Reviewer
+```javascript
+async performSecurityAnalysis() {
+  const code = await fs.readFile(filePath, 'utf8');
+  const securityIssues = [];
+  
+  // Critical security patterns
+  if (code.includes('eval(')) {
+    securityIssues.push({ 
+      severity: 'critical', 
+      type: 'code-injection', 
+      message: 'Avoid eval() - code injection risk' 
+    });
+  }
+  
+  // Check for hardcoded secrets
+  if (code.match(/password.*=.*['"].*['"]/) || 
+      code.match(/api.*key.*=.*['"].*['"]/)) {
+    securityIssues.push({ 
+      severity: 'critical', 
+      type: 'hardcoded-secrets', 
+      message: 'Hardcoded credentials detected' 
+    });
+  }
+  
+  return {
+    agent: this.role,
+    analysis: 'security-complete',
+    vulnerabilities: securityIssues,
+    riskLevel: this.calculateRiskLevel(securityIssues)
+  };
+}
+```
+
+### Logic Reviewer (waits for syntax)
+```javascript
+async performLogicAnalysis() {
+  // Wait for syntax analysis results
+  const sharedState = await this.loadSharedState();
+  const syntaxResults = sharedState.agentContributions?.['syntax-reviewer'];
+  
+  if (!syntaxResults) {
+    throw new Error('Syntax analysis not available yet');
+  }
+  
+  const code = await fs.readFile(filePath, 'utf8');
+  const logicIssues = [];
+  
+  // Build on syntax analysis
+  const complexityScore = this.calculateComplexity(code);
+  if (complexityScore > 10) {
+    logicIssues.push({
+      type: 'high-complexity',
+      score: complexityScore,
+      message: 'Consider refactoring for lower complexity'
+    });
+  }
+  
+  return {
+    agent: this.role,
+    analysis: 'logic-complete',
+    issues: logicIssues,
+    complexity: complexityScore,
+    buildsOn: ['syntax-reviewer']
+  };
+}
+```
+
+### Final Synthesizer (waits for all)
+```javascript
+async performSynthesis() {
+  const sharedState = await this.loadSharedState();
+  const allContributions = sharedState.agentContributions || {};
+  
+  // Collect all findings from team
+  const allIssues = [];
+  const allRecommendations = [];
+  
+  Object.values(allContributions).forEach(contribution => {
+    if (contribution.issues) allIssues.push(...contribution.issues);
+    if (contribution.vulnerabilities) allIssues.push(...contribution.vulnerabilities);
+    if (contribution.recommendations) allRecommendations.push(...contribution.recommendations);
+  });
+  
+  // Create comprehensive synthesis
+  const synthesis = {
+    summary: {
+      totalIssues: allIssues.length,
+      criticalIssues: allIssues.filter(i => i.severity === 'critical').length,
+      highIssues: allIssues.filter(i => i.severity === 'high').length
+    },
+    prioritizedRecommendations: this.prioritizeRecommendations(allRecommendations),
+    overallAssessment: this.generateOverallAssessment(allIssues),
+    actionPlan: this.generateActionPlan(allIssues, allRecommendations)
+  };
+  
+  return {
+    agent: this.role,
+    analysis: 'synthesis-complete',
+    synthesis,
+    consensus: await this.buildConsensus(allContributions)
+  };
+}
+```
+
+## Advanced Collaboration Features
+
+### Cross-Agent Learning
+```javascript
+// Agents learn from each other's expertise
+async observePeerContribution(peerData) {
+  if (peerData.expertise.includes('security') && this.expertise.includes('logic')) {
+    // Logic reviewer learns security patterns from security reviewer
+    this.learnedPatterns.push(...peerData.securityPatterns);
+  }
+}
+```
+
+### Dynamic Expertise Weighting
+```javascript
+// Expertise influences consensus weight
+calculateExpertiseWeight(agent, topic) {
+  const relevantExpertise = agent.expertise.filter(exp => 
+    topic.toLowerCase().includes(exp.toLowerCase())
+  );
+  return relevantExpertise.length / agent.expertise.length;
+}
+```
+
+### Conflict Resolution
+```javascript
+async resolveConflicts(conflictingFindings) {
+  // Byzantine fault tolerance for disagreements
+  const votingRounds = [];
+  
+  for (let round = 0; round < 3; round++) {
+    const votes = await this.collectVotes(conflictingFindings);
+    const consensus = this.evaluateVotes(votes);
+    
+    if (consensus.confidence > 0.8) {
+      return consensus.resolution;
+    }
+    
+    votingRounds.push(votes);
+  }
+  
+  // Escalate to human if no consensus
+  return this.escalateToHuman(votingRounds);
+}
+```
+
+## Benefits of Collaborative Approach
+
+### Collective Intelligence
+- **Complementary Expertise**: Each agent contributes unique skills
+- **Cross-Validation**: Agents verify each other's findings
+- **Emergent Insights**: Collaboration produces insights no single agent could reach
+
+### Real-Time Coordination
+- **Immediate Feedback**: Agents respond to each other's discoveries instantly
+- **Adaptive Workflows**: Teams adjust based on intermediate findings
+- **Synchronized Decision Making**: All agents participate in consensus
+
+### Quality Amplification
+- **Multiple Perspectives**: Same code viewed through different expert lenses
+- **Comprehensive Coverage**: No aspect overlooked with specialized agents
+- **Continuous Improvement**: Agents learn from each collaboration
+
+## Use Cases
+
+### Complex Code Review
+```bash
+# Collaborative team reviews critical security code
+claude "Review authentication middleware for vulnerabilities"
+
+# Team coordination:
+# - Syntax reviewer ensures code parses correctly
+# - Security reviewer identifies vulnerability patterns
+# - Logic reviewer analyzes authentication flow
+# - Integration reviewer checks API contract compliance
+# - Final synthesizer creates actionable security report
+```
+
+### Feature Architecture
+```bash
+# Team designs new feature collaboratively
+claude "Design real-time chat feature"
+
+# Synchronized design process:
+# - Requirements analyst defines user stories and acceptance criteria
+# - API designer creates WebSocket and REST endpoints (waits for requirements)
+# - Frontend architect designs React components (waits for API design)
+# - Backend architect designs microservices (waits for API design)
+# - Test strategist creates testing plan (waits for all architectures)
+# - Integration coordinator plans deployment (waits for test strategy)
+```
+
+### Collaborative Debugging
+```bash
+# Team investigates production issue together
+claude "Debug memory leak in payment processing"
+
+# Real-time investigation:
+# - Error detective catalogs symptoms and stack traces
+# - Data investigator analyzes memory usage patterns (waits for error catalog)
+# - Flow tracer follows execution paths (waits for error catalog)
+# - Hypothesis generator formulates theories (waits for data and flow analysis)
+# - Solution architect designs fixes (waits for hypotheses)
+# - Verification specialist creates tests (waits for solution design)
+```
+
+This collaborative approach creates truly intelligent team behavior where agents work together synchronously, sharing knowledge and building consensus in real-time, rather than just running separate tasks in parallel.

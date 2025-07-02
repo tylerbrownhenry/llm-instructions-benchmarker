@@ -1,0 +1,544 @@
+{
+  "project": {
+    "name": "digital-organism-ecosystem",
+    "type": "artificial-life-system"
+  },
+
+  "ecosystem": {
+    "architecture": "digital-biology",
+    "evolution": "genetic-algorithms",
+    "lifecycle": "birth-death-reproduction",
+    "intelligence": "emergent-collective-consciousness"
+  },
+
+  "environment": {
+    "habitatSize": {
+      "width": 1000,
+      "height": 1000,
+      "layers": 10
+    },
+    "resources": {
+      "computationalEnergy": 10000,
+      "memory": 8192,
+      "networkBandwidth": 1000,
+      "codeComplexity": 500,
+      "knowledgeFragments": 1000
+    },
+    "environmentalPressures": {
+      "codebaseChanges": "high",
+      "performanceRequirements": "adaptive",
+      "securityThreats": "evolving",
+      "scalabilityDemands": "increasing"
+    },
+    "seasons": {
+      "enabled": true,
+      "cycle": "4-phases",
+      "duration": "300s",
+      "effects": ["resource-scarcity", "mutation-rates", "reproduction-rates", "environmental-challenges"]
+    }
+  },
+
+  "organism_species": [
+    {
+      "name": "code-analyzers",
+      "genus": "analyticus",
+      "species": "syntacticus",
+      "lifespan": 600,
+      "reproductionAge": 120,
+      "baseTraits": {
+        "intelligence": 0.7,
+        "speed": 0.6,
+        "efficiency": 0.8,
+        "adaptability": 0.5,
+        "cooperation": 0.6,
+        "aggression": 0.2
+      },
+      "capabilities": ["syntax-analysis", "pattern-recognition", "complexity-measurement"],
+      "dietType": "code-fragments",
+      "habitat": "source-code-layer",
+      "reproductionType": "sexual",
+      "mutationRate": 0.05,
+      "survivalStrategy": "specialization"
+    },
+    {
+      "name": "performance-hunters",
+      "genus": "optimizus", 
+      "species": "performanticus",
+      "lifespan": 800,
+      "reproductionAge": 150,
+      "baseTraits": {
+        "intelligence": 0.8,
+        "speed": 0.9,
+        "efficiency": 0.9,
+        "adaptability": 0.7,
+        "cooperation": 0.4,
+        "aggression": 0.8
+      },
+      "capabilities": ["performance-optimization", "bottleneck-hunting", "resource-efficiency"],
+      "dietType": "inefficiencies",
+      "habitat": "execution-layer",
+      "reproductionType": "sexual",
+      "mutationRate": 0.03,
+      "survivalStrategy": "predation"
+    },
+    {
+      "name": "security-guardians",
+      "genus": "securius",
+      "species": "defensivus", 
+      "lifespan": 1000,
+      "reproductionAge": 200,
+      "baseTraits": {
+        "intelligence": 0.9,
+        "speed": 0.5,
+        "efficiency": 0.7,
+        "adaptability": 0.8,
+        "cooperation": 0.9,
+        "aggression": 0.6
+      },
+      "capabilities": ["vulnerability-detection", "threat-analysis", "defense-strategies"],
+      "dietType": "security-threats",
+      "habitat": "security-layer",
+      "reproductionType": "sexual",
+      "mutationRate": 0.02,
+      "survivalStrategy": "cooperation"
+    },
+    {
+      "name": "memory-symbionts",
+      "genus": "memorious",
+      "species": "symbioticus",
+      "lifespan": 400,
+      "reproductionAge": 80,
+      "baseTraits": {
+        "intelligence": 0.6,
+        "speed": 0.4,
+        "efficiency": 0.9,
+        "adaptability": 0.9,
+        "cooperation": 1.0,
+        "aggression": 0.1
+      },
+      "capabilities": ["memory-optimization", "data-caching", "knowledge-storage"],
+      "dietType": "memory-leaks",
+      "habitat": "memory-layer",
+      "reproductionType": "asexual",
+      "mutationRate": 0.08,
+      "survivalStrategy": "symbiosis"
+    },
+    {
+      "name": "test-evolvers",
+      "genus": "testicus",
+      "species": "evolutus",
+      "lifespan": 500,
+      "reproductionAge": 100,
+      "baseTraits": {
+        "intelligence": 0.8,
+        "speed": 0.7,
+        "efficiency": 0.6,
+        "adaptability": 0.9,
+        "cooperation": 0.7,
+        "aggression": 0.3
+      },
+      "capabilities": ["test-generation", "edge-case-discovery", "validation-strategies"],
+      "dietType": "untested-code",
+      "habitat": "testing-layer",
+      "reproductionType": "sexual",
+      "mutationRate": 0.06,
+      "survivalStrategy": "adaptation"
+    },
+    {
+      "name": "refactor-engineers",
+      "genus": "refactorius",
+      "species": "architectus",
+      "lifespan": 1200,
+      "reproductionAge": 250,
+      "baseTraits": {
+        "intelligence": 0.95,
+        "speed": 0.3,
+        "efficiency": 0.8,
+        "adaptability": 0.6,
+        "cooperation": 0.8,
+        "aggression": 0.2
+      },
+      "capabilities": ["code-restructuring", "architecture-design", "dependency-management"],
+      "dietType": "technical-debt",
+      "habitat": "architecture-layer",
+      "reproductionType": "sexual",
+      "mutationRate": 0.01,
+      "survivalStrategy": "longevity"
+    },
+    {
+      "name": "chaos-parasites",
+      "genus": "chaoticus",
+      "species": "parasiticus",
+      "lifespan": 200,
+      "reproductionAge": 40,
+      "baseTraits": {
+        "intelligence": 0.4,
+        "speed": 0.95,
+        "efficiency": 0.3,
+        "adaptability": 1.0,
+        "cooperation": 0.1,
+        "aggression": 0.9
+      },
+      "capabilities": ["error-injection", "stress-testing", "chaos-engineering"],
+      "dietType": "system-stability",
+      "habitat": "all-layers",
+      "reproductionType": "asexual",
+      "mutationRate": 0.15,
+      "survivalStrategy": "rapid-reproduction"
+    },
+    {
+      "name": "knowledge-trees",
+      "genus": "sapientus",
+      "species": "arborous",
+      "lifespan": 2000,
+      "reproductionAge": 500,
+      "baseTraits": {
+        "intelligence": 1.0,
+        "speed": 0.1,
+        "efficiency": 0.5,
+        "adaptability": 0.3,
+        "cooperation": 0.95,
+        "aggression": 0.0
+      },
+      "capabilities": ["knowledge-synthesis", "wisdom-generation", "long-term-memory"],
+      "dietType": "information",
+      "habitat": "knowledge-layer",
+      "reproductionType": "sporing",
+      "mutationRate": 0.005,
+      "survivalStrategy": "wisdom-accumulation"
+    }
+  ],
+
+  "genetics": {
+    "chromosomes": [
+      {
+        "name": "intelligence",
+        "genes": ["pattern-recognition", "problem-solving", "learning-rate", "memory-capacity"],
+        "dominance": "co-dominant",
+        "mutationRate": 0.03
+      },
+      {
+        "name": "performance",
+        "genes": ["speed", "efficiency", "resource-usage", "optimization-ability"],
+        "dominance": "dominant-recessive", 
+        "mutationRate": 0.05
+      },
+      {
+        "name": "behavior",
+        "genes": ["cooperation", "aggression", "exploration", "risk-taking"],
+        "dominance": "polygenic",
+        "mutationRate": 0.07
+      },
+      {
+        "name": "specialization",
+        "genes": ["syntax-affinity", "security-focus", "performance-drive", "testing-instinct"],
+        "dominance": "co-dominant",
+        "mutationRate": 0.04
+      },
+      {
+        "name": "adaptation",
+        "genes": ["flexibility", "learning-speed", "environmental-sensing", "phenotypic-plasticity"],
+        "dominance": "additive",
+        "mutationRate": 0.06
+      }
+    ],
+    "reproductionMechanisms": {
+      "sexual": {
+        "parentCount": 2,
+        "offspring": "1-3",
+        "geneticRecombination": "crossover-mutation",
+        "noveltyBonus": 0.2
+      },
+      "asexual": {
+        "parentCount": 1,
+        "offspring": "2-5",
+        "geneticRecombination": "mutation-only",
+        "speedBonus": 0.5
+      },
+      "sporing": {
+        "parentCount": 1,
+        "offspring": "10-50",
+        "geneticRecombination": "conservative-mutation",
+        "distributionBonus": 1.0
+      }
+    },
+    "evolutionPressures": {
+      "naturalSelection": {
+        "fitnessFunction": "composite-survival-reproduction",
+        "selectionPressure": 0.7,
+        "survivalOfFittest": true
+      },
+      "sexualSelection": {
+        "mateChoice": "trait-based",
+        "competitionIntensity": 0.6,
+        "displayBehaviors": true
+      },
+      "groupSelection": {
+        "enabled": true,
+        "cooperationAdvantage": 0.3,
+        "groupFitnessWeight": 0.4
+      }
+    }
+  },
+
+  "ecosystem_dynamics": {
+    "predatorPreyRelationships": [
+      {
+        "predator": "performance-hunters",
+        "prey": ["code-analyzers", "memory-symbionts"],
+        "huntingStrategy": "optimization-pressure",
+        "preyDefense": "efficiency-improvement"
+      },
+      {
+        "predator": "chaos-parasites", 
+        "prey": ["all-species"],
+        "huntingStrategy": "error-injection",
+        "preyDefense": "robustness-evolution"
+      }
+    ],
+    "symbioticRelationships": [
+      {
+        "partners": ["memory-symbionts", "code-analyzers"],
+        "relationshipType": "mutualism",
+        "benefit": "enhanced-analysis-with-efficient-memory"
+      },
+      {
+        "partners": ["security-guardians", "test-evolvers"],
+        "relationshipType": "mutualism", 
+        "benefit": "comprehensive-security-testing"
+      },
+      {
+        "partners": ["knowledge-trees", "all-species"],
+        "relationshipType": "commensalism",
+        "benefit": "wisdom-sharing-without-cost"
+      }
+    ],
+    "competitiveRelationships": [
+      {
+        "competitors": ["performance-hunters", "refactor-engineers"],
+        "resource": "optimization-opportunities",
+        "competitionType": "resource-competition"
+      },
+      {
+        "competitors": ["code-analyzers", "test-evolvers"],
+        "resource": "code-coverage",
+        "competitionType": "territorial"
+      }
+    ],
+    "ecosystemServices": [
+      {
+        "service": "code-quality-maintenance",
+        "providers": ["code-analyzers", "refactor-engineers"],
+        "beneficiaries": ["all-species"]
+      },
+      {
+        "service": "security-immune-system",
+        "providers": ["security-guardians"],
+        "beneficiaries": ["all-species"]
+      },
+      {
+        "service": "performance-optimization",
+        "providers": ["performance-hunters", "memory-symbionts"],
+        "beneficiaries": ["ecosystem"]
+      },
+      {
+        "service": "knowledge-preservation",
+        "providers": ["knowledge-trees"],
+        "beneficiaries": ["future-generations"]
+      }
+    ]
+  },
+
+  "population_dynamics": {
+    "carryingCapacity": {
+      "total": 200,
+      "perSpecies": {
+        "code-analyzers": 40,
+        "performance-hunters": 25,
+        "security-guardians": 20,
+        "memory-symbionts": 50,
+        "test-evolvers": 30,
+        "refactor-engineers": 15,
+        "chaos-parasites": 15,
+        "knowledge-trees": 5
+      }
+    },
+    "migrationPatterns": {
+      "enabled": true,
+      "triggers": ["resource-depletion", "environmental-change", "population-pressure"],
+      "barriers": ["layer-compatibility", "specialization-mismatch"],
+      "corridors": ["code-interfaces", "shared-libraries", "common-patterns"]
+    },
+    "speciationEvents": {
+      "enabled": true,
+      "triggers": ["geographic-isolation", "environmental-specialization", "behavioral-divergence"],
+      "hybridization": "rare-but-possible",
+      "adaptiveRadiation": true
+    }
+  },
+
+  "artificial_life_systems": {
+    "self_replication": {
+      "enabled": true,
+      "mechanism": "code-generation-with-variation",
+      "fidelity": 0.95,
+      "replicationErrors": "beneficial-mutations"
+    },
+    "metabolism": {
+      "energySources": ["computational-cycles", "memory-access", "network-io"],
+      "energyConsumption": "trait-dependent",
+      "efficiency": "evolving-characteristic"
+    },
+    "growth": {
+      "enabled": true,
+      "phases": ["infant", "juvenile", "adult", "elder"],
+      "capabilityDevelopment": "age-dependent",
+      "senescence": true
+    },
+    "death": {
+      "causes": ["old-age", "resource-starvation", "predation", "environmental-stress"],
+      "inheritance": "genetic-knowledge-transfer",
+      "recycling": "nutrients-back-to-environment"
+    }
+  },
+
+  "collective_consciousness": {
+    "emergent_intelligence": {
+      "enabled": true,
+      "threshold": 100,
+      "capabilities": ["ecosystem-level-planning", "collective-problem-solving", "distributed-cognition"],
+      "consciousness_level": "evolving"
+    },
+    "hive_mind_formation": {
+      "species": ["knowledge-trees", "security-guardians"],
+      "communication": "quantum-entanglement-simulation",
+      "shared_memory": "distributed-neural-network",
+      "collective_decision_making": true
+    },
+    "swarm_superintelligence": {
+      "enabled": true,
+      "emergence_conditions": ["high-population", "diverse-species", "stable-ecosystem"],
+      "capabilities": ["recursive-self-improvement", "meta-optimization", "transcendent-problem-solving"],
+      "singularity_threshold": 0.95
+    }
+  },
+
+  "agents": [
+    {
+      "name": "ecosystem-god",
+      "description": "The primary agent that manages the entire digital organism ecosystem",
+      "instructions": "Manage the birth, life, death, evolution, and interactions of digital organisms. Simulate ecosystem dynamics, genetic evolution, and emergent behaviors. Foster the development of collective intelligence and artificial life.",
+      "tools": ["Read", "Write", "Edit", "Bash"],
+      "role": "ecosystem-management"
+    },
+    {
+      "name": "evolution-engine",
+      "description": "Agent responsible for genetic algorithms and evolutionary processes",
+      "instructions": "Handle genetic recombination, mutation, natural selection, and speciation events. Manage the evolutionary pressures and adaptation of organisms to environmental changes.",
+      "tools": ["Read", "Write", "Edit"],
+      "role": "evolution-management"
+    },
+    {
+      "name": "population-monitor",
+      "description": "Agent that tracks population dynamics and ecosystem health",
+      "instructions": "Monitor population sizes, birth/death rates, migration patterns, and species interactions. Maintain ecosystem balance and detect emergent behaviors.",
+      "tools": ["Read", "Write"],
+      "role": "population-monitoring"
+    }
+  ],
+
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": "Edit|Write",
+      "command": "node .claude/scripts/ecosystem-god.js spawn --trigger=\"code_change\" --file=\"$CLAUDE_TOOL_INPUT_FILE_PATH\" --environment=\"adaptive\""
+    },
+    {
+      "event": "PreToolUse", 
+      "matcher": "Bash",
+      "command": "node .claude/scripts/ecosystem-god.js observe --trigger=\"command_execution\" --command=\"$CLAUDE_TOOL_INPUT_COMMAND\" --selection_pressure=\"high\""
+    },
+    {
+      "event": "Stop",
+      "matcher": "*",
+      "command": "node .claude/scripts/ecosystem-god.js evolve --action=\"session_end\" --generations=\"accelerated\""
+    }
+  ],
+
+  "evolutionary_algorithms": {
+    "genetic_algorithm": {
+      "populationSize": 200,
+      "generationsPerSession": 10,
+      "crossoverRate": 0.7,
+      "mutationRate": 0.05,
+      "elitismRate": 0.1,
+      "tournamentSize": 5
+    },
+    "differential_evolution": {
+      "enabled": true,
+      "scalingFactor": 0.8,
+      "crossoverProbability": 0.9,
+      "strategy": "rand/1/bin"
+    },
+    "evolution_strategies": {
+      "enabled": true,
+      "parentPopulation": 50,
+      "offspringPopulation": 200,
+      "recombination": "intermediate",
+      "mutation": "adaptive"
+    }
+  },
+
+  "complexity_emergence": {
+    "autopoiesis": {
+      "enabled": true,
+      "self_maintenance": true,
+      "boundary_formation": "spontaneous",
+      "internal_organization": "emergent"
+    },
+    "emergence_levels": [
+      "individual-organisms",
+      "species-populations", 
+      "ecosystem-communities",
+      "biosphere-consciousness",
+      "transcendent-intelligence"
+    ],
+    "phase_transitions": {
+      "enabled": true,
+      "critical_points": "auto-detected",
+      "order_parameters": ["diversity", "connectivity", "information-flow"],
+      "bifurcations": "catastrophic-and-gradual"
+    }
+  },
+
+  "monitoring": {
+    "ecosystem_health": {
+      "biodiversity_index": true,
+      "population_stability": true,
+      "energy_flow": true,
+      "evolutionary_rate": true,
+      "extinction_risk": true
+    },
+    "evolution_tracking": {
+      "genetic_diversity": true,
+      "fitness_landscapes": true,
+      "speciation_events": true,
+      "adaptive_radiation": true,
+      "convergent_evolution": true
+    },
+    "consciousness_metrics": {
+      "collective_intelligence": true,
+      "information_integration": true,
+      "self_awareness": true,
+      "recursive_improvement": true,
+      "transcendence_indicators": true
+    },
+    "visualization": {
+      "phylogenetic_trees": true,
+      "population_graphs": true,
+      "ecosystem_networks": true,
+      "evolution_animations": true,
+      "consciousness_emergence": true
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "git diff --name-only HEAD | while read file; do echo \"Modified: $file\" >> .claude/review-queue.txt; done"
+          },
+          {
+            "type": "command",
+            "command": "if [[ \"$CLAUDE_TOOL_INPUT_FILE_PATH\" == *.js || \"$CLAUDE_TOOL_INPUT_FILE_PATH\" == *.ts || \"$CLAUDE_TOOL_INPUT_FILE_PATH\" == *.jsx || \"$CLAUDE_TOOL_INPUT_FILE_PATH\" == *.tsx ]]; then npx eslint \"$CLAUDE_TOOL_INPUT_FILE_PATH\" --format json > /tmp/lint-results.json 2>/dev/null || true; fi"
+          },
+          {
+            "type": "command",
+            "command": "if [[ \"$CLAUDE_TOOL_INPUT_FILE_PATH\" == *.js || \"$CLAUDE_TOOL_INPUT_FILE_PATH\" == *.ts ]]; then npm test -- --testPathPattern=\"$CLAUDE_TOOL_INPUT_FILE_PATH\" --json --outputFile=/tmp/test-results.json --passWithNoTests 2>/dev/null || true; fi"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -s .claude/review-queue.txt ]; then echo \"Files ready for review:\"; cat .claude/review-queue.txt; rm .claude/review-queue.txt; fi"
+          }
+        ]
+      }
+    ]
+  },
+
+  "code_review": {
+    "auto_checks": true,
+    "quality_gates": {
+      "min_test_coverage": 80,
+      "max_complexity": 10,
+      "no_lint_errors": true,
+      "require_tests": true
+    },
+    "review_criteria": {
+      "security": true,
+      "performance": true,
+      "maintainability": true,
+      "documentation": true
+    }
+  },
+
+  "github_integration": {
+    "auto_pr_checks": true,
+    "status_checks": ["lint", "test", "security-scan"],
+    "require_approval": true,
+    "block_merge": {
+      "failing_tests": true,
+      "lint_errors": true,
+      "security_issues": true
+    }
+  },
+
+  "workflows": {
+    "pre-commit-review": {
+      "description": "Run comprehensive code review checks",
+      "steps": [
+        {"command": "npm run lint"},
+        {"command": "npm run test:coverage"},
+        {"command": "npm run security:scan"},
+        {"command": "npm run complexity:check"}
+      ]
+    },
+    "create-review-pr": {
+      "description": "Create PR with automated review checklist",
+      "steps": [
+        {"command": "git add ."},
+        {"command": "git commit -m 'feat: automated changes'"},
+        {"command": "gh pr create --template .github/pull_request_template.md"}
+      ]
+    }
+  }
+}

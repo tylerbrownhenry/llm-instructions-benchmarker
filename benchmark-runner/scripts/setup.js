@@ -33,15 +33,41 @@ async function createSampleDirectories() {
       // Copy template to sample directory
       await fs.copy(TEMPLATE_PATH, sampleDir);
       
-      // Copy the appropriate CLAUDE.md file
-      const claudeConfigSource = path.join(CLAUDE_CONFIGS_PATH, scenario.claudeFile);
-      const claudeConfigDest = path.join(sampleDir, 'CLAUDE.md');
-      
-      if (fs.existsSync(claudeConfigSource)) {
-        await fs.copy(claudeConfigSource, claudeConfigDest);
-        console.log(`   ✅ Copied ${scenario.claudeFile} to CLAUDE.md`);
+      // Copy the appropriate CLAUDE configuration
+      if (scenario.claudeFile) {
+        // Handle single file configuration
+        const claudeConfigSource = path.join(CLAUDE_CONFIGS_PATH, scenario.claudeFile);
+        const claudeConfigDest = path.join(sampleDir, 'CLAUDE.md');
+        
+        if (fs.existsSync(claudeConfigSource)) {
+          await fs.copy(claudeConfigSource, claudeConfigDest);
+          console.log(`   ✅ Copied ${scenario.claudeFile} to CLAUDE.md`);
+        } else {
+          console.warn(`   ⚠️  Warning: ${scenario.claudeFile} not found`);
+        }
+      } else if (scenario.claudeFolder) {
+        // Handle folder-based configuration
+        const claudeFolderSource = path.join(__dirname, '..', scenario.claudeFolder);
+        
+        if (fs.existsSync(claudeFolderSource)) {
+          // Copy all files from the folder
+          const files = await fs.readdir(claudeFolderSource);
+          for (const file of files) {
+            const sourceFile = path.join(claudeFolderSource, file);
+            const destFile = path.join(sampleDir, file);
+            
+            // Check if it's a file (not a directory)
+            const stat = await fs.stat(sourceFile);
+            if (stat.isFile()) {
+              await fs.copy(sourceFile, destFile);
+              console.log(`   ✅ Copied ${file} from ${scenario.claudeFolder}`);
+            }
+          }
+        } else {
+          console.warn(`   ⚠️  Warning: Folder ${scenario.claudeFolder} not found`);
+        }
       } else {
-        console.warn(`   ⚠️  Warning: ${scenario.claudeFile} not found`);
+        console.warn(`   ⚠️  Warning: No claudeFile or claudeFolder specified for ${scenario.id}`);
       }
       
       // Install dependencies

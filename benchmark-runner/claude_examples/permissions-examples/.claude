@@ -1,0 +1,51 @@
+{
+  "permissions": {
+    "granted": "all",
+    "tools": {
+      "bash": {
+        "allowed": true,
+        "dangerous_commands": false,
+        "system_modification": true
+      },
+      "file_operations": {
+        "read": true,
+        "write": true,
+        "delete": true,
+        "execute": true
+      },
+      "network": {
+        "web_fetch": true,
+        "api_calls": true,
+        "download": true
+      },
+      "git": {
+        "commit": true,
+        "push": true,
+        "branch": true,
+        "merge": true
+      },
+      "package_management": {
+        "install": true,
+        "update": true,
+        "global_install": true
+      }
+    }
+  },
+  "auto_approve": {
+    "file_operations": ["*.js", "*.ts", "*.jsx", "*.tsx", "*.json", "*.md"],
+    "bash_commands": [
+      "npm install",
+      "npm run *",
+      "git add .",
+      "git commit -m *",
+      "yarn install",
+      "pnpm install"
+    ],
+    "git_operations": ["add", "commit", "push", "pull", "checkout", "merge"]
+  },
+  "safety": {
+    "backup_before_delete": true,
+    "confirm_destructive": false,
+    "log_all_operations": true
+  }
+}
