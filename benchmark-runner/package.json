@@ -4,7 +4,7 @@
   "description": "Automated benchmarking system for Claude Code with different instruction configurations",
   "main": "benchmark.js",
   "scripts": {
-    "benchmark": "node benchmark.js",
+    "benchmark": "rm -rf samples && mkdir samples && node benchmark.js",
     "setup": "node scripts/setup.js",
     "run": "node scripts/runner.js",
     "analyze": "node scripts/analyzer.js",

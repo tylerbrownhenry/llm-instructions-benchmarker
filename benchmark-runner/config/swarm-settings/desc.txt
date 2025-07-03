@@ -1,4 +1,3 @@
-# Collaborative Agent Teams
 
 This example demonstrates synchronized agent teams that work together collaboratively in real-time, rather than just spawning separate asynchronous processes.
 

@@ -19,9 +19,18 @@ class BenchmarkOrchestrator {
     const startTime = Date.now();
     
     try {
-      // Step 1: Setup sample directories
+      // Step 1: Clear and setup sample directories
       if (!options.skipSetup) {
         console.log('\\n📁 Step 1: Setting up sample directories...');
+        
+        // Clear existing samples first
+        const samplesPath = path.join(__dirname, 'samples');
+        if (fs.existsSync(samplesPath)) {
+          console.log('   🧹 Clearing existing samples...');
+          await fs.remove(samplesPath);
+          console.log('   ✅ Existing samples cleared');
+        }
+        
         await createSampleDirectories();
       } else {
         console.log('\\n📁 Step 1: Skipping setup (--skip-setup flag)');
@@ -88,6 +97,11 @@ class BenchmarkOrchestrator {
     try {
       // Setup if needed
       if (!options.skipSetup) {
+        // Clear existing samples first
+        const samplesPath = path.join(__dirname, 'samples');
+        if (fs.existsSync(samplesPath)) {
+          await fs.remove(samplesPath);
+        }
         await createSampleDirectories();
       }
       

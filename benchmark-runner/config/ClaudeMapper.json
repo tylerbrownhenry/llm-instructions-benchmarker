@@ -3,20 +3,8 @@
     {
       "id": "collaborative-agents",
       "name": "Collaborative Agent Teams",
-      "claudeFolder": "collaborative-agents-examples",
+      "claudeFolder": "config/swarm-settings",
       "description": "Synchronized agent teams working together in real-time"
-    },
-    {
-      "id": "agent-swarm-examples",
-      "name": "Agent Swarm Examples",
-      "claudeFolder": "agent-swarm-examples",
-      "description": "Swarming agents"
-    },
-   {
-      "id": "digital-ecosystem",
-      "name": "Digital Ecosystem",
-      "claudeFolder": "digital-ecosystem",
-      "description": "From single cells to evolved beings"
     }
   ],
   "settings": {
